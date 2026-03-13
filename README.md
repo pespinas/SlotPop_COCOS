@@ -1,4 +1,4 @@
-# 🎰 PokéSlot: Avalanche Edition (Nombre provisional)
+# 🎰 PokéSlot: Legendary Ruins
 
 Un prototipo de juego de tragaperras (Slot) desarrollado en **Cocos Creator** con mecánicas de "Cascading Reels" (Efecto Avalancha) y temática de Pokémon. 
 
