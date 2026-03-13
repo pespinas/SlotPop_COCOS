@@ -22,23 +22,22 @@ El núcleo de este proyecto es la **independencia del framework**. La lógica de
 
 ## 🎮 Mecánicas de Juego y "Game Feel"
 
-* **Cuadrícula 3x4:** El área de juego visible consta de 3 columnas y 4 filas.
-* **Físicas de Gravedad:** A diferencia de los slots tradicionales, los símbolos son objetos físicos que caen y colisionan. Se utiliza el motor **Box2D** integrado.
-* **Algoritmo de Premios (Adjacent Match):** El sistema escanea el tablero buscando grupos de 3 o más símbolos conectados horizontal o verticalmente.
-* **Cascadas (Chain Reactions):** 1.  Las combinaciones ganadoras se eliminan.
-    2.  Se activa un evento de explosión (VFX).
-    3.  Los símbolos superiores caen por gravedad.
-    4.  Nuevos símbolos se instancian en la parte superior para rellenar el tablero.
+* **Cuadrícula 3x4:** El área de juego consta de 3 columnas por 4 filas visibles.
+* **Gravedad Simulada (Tweens):** Los símbolos caen desde la parte superior utilizando curvas de aceleración (Easing functions) para emular de forma controlada el efecto de la gravedad.
+* **Algoritmo de Premios (Adjacent Match):** El sistema escanea el tablero buscando grupos de **3 o más símbolos iguales** conectados horizontal o verticalmente.
+* **Reacciones en Cadena (Avalancha):** 1.  Las combinaciones ganadoras se detectan y eliminan.
+    2.  Se disparan eventos de explosión y desaparición.
+    3.  Los símbolos superiores se desplazan hacia abajo mediante Tweens coordinados para llenar los huecos vacíos.
+    4.  Nuevos símbolos se generan fuera de pantalla y caen para completar la cuadrícula.
 
 ---
 
 ## 🛠️ Stack Técnico y Herramientas
 
-* **Engine:** Cocos Creator 3.x (Sistema de componentes y nodos).
-* **Físicas:** RigidBody2D + BoxCollider2D.
-* **Lenguaje:** TypeScript (Tipado estricto para modelos de datos).
-* **Assets:** Sprite Atlas para optimización de llamadas de dibujado (Draw Calls).
-* **UI:** Sistema de layouts dinámicos para adaptación a pantallas móviles.
+* **Engine:** Cocos Creator 3.x.
+* **Animación:** Sistema de `tween()` para el movimiento de caída y efectos de rebote (Elastic/Bounce).
+* **Lenguaje:** TypeScript (Tipado estricto).
+* **Optimización:** Uso de Sprite Atlas para reducir el Draw Call y mejorar el rendimiento en móviles.
 
 ---
 
@@ -49,8 +48,8 @@ assets/
 ├── Atlas/             # Spritesheets de Pokémon y UI
 ├── Scenes/            # Escena principal de juego
 └── Scripts/
-    ├── Domain/        # Modelos de datos y Generador Aleatorio (RNG)
-    ├── Application/   # Controlador de Premios y Lógica de Juego
+    ├── Domain/        # Generador Aleatorio (RNG) y Modelos
+    ├── Application/   # Lógica de Premios (Adyacentes) y Reglas
     ├── Infrastructure/# Event Manager y Tipos de Eventos
-    └── Presentation/  # Controladores de Sprites, Físicas y Animaciones
+    └── Presentation/  # Controladores de Sprites y Animaciones (Tweens)
 ```
