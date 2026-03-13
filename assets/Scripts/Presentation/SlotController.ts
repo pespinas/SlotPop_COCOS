@@ -5,6 +5,7 @@ import { EventManager } from '../Infrastructure/EventManager';
 import { SymbolRNG } from '../Domain/SymbolRNG';
 import { SymbolController } from './SymbolController';
 import { ReelsController } from './ReelsController';
+import {PresentConfig} from "./PresentConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass('SlotController')
@@ -15,6 +16,9 @@ export class SlotController extends Component {
     @property({ type: Prefab })
     symbolPref: Prefab;
 
+    @property({ type: PresentConfig})
+    config: PresentConfig = null;
+
     private globalRng = new SymbolRNG();
 
     onLoad(){
@@ -22,7 +26,12 @@ export class SlotController extends Component {
             const newReel = instantiate (this.symbolPref);
             mask.addChild(newReel);
             const reelCtrl = newReel.getComponent(ReelsController);
-            reelCtrl.reelIndex = index;
+            reelCtrl.init(
+                index,
+                this.config.bottomY,
+                this.config.topY,
+                this.config.spinDuration
+            );
 
             const childController = newReel.getComponentsInChildren(SymbolController);
             childController.forEach(ctrl => {

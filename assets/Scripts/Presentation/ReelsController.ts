@@ -1,8 +1,8 @@
-
-import { _decorator, Component, Node, Sprite, tween, Vec3, TweenSystem,SpriteAtlas } from 'cc';
-import {EventManager} from "db://assets/Scripts/Infrastructure/EventManager";
-import {NameEvent} from "db://assets/Scripts/Infrastructure/NameEvent";
+import {_decorator, Component, Node, tween, Vec3} from 'cc';
+import {EventManager} from '../Infrastructure/EventManager';
+import {NameEvent} from '../Infrastructure/NameEvent';
 import {SymbolController} from "./SymbolController";
+
 const { ccclass, property } = _decorator;
 
 @ccclass('ReelsController')
@@ -11,12 +11,21 @@ export class ReelsController extends Component {
     public symbols: Node[] = [];
 
     public reelIndex: number = 0;
-    private minY = -436;
-    private maxY = 419;
-    private duration = 1;
+    private minY = 0;
+    private maxY = 0;
+    private duration = 0;
+
+
+    public init(index: number, bottomY: number, topY: number, fallDuration: number) {
+        this.reelIndex = index;
+        this.minY = bottomY;
+        this.maxY = topY;
+        this.duration = fallDuration;
+    }
 
     onLoad () {
         EventManager.on(NameEvent.ON_SPIN, this.reelStartMovement, this);
+
     }
     onDestroy () {
         EventManager.off(NameEvent.ON_SPIN, this.reelStartMovement, this);
@@ -27,6 +36,9 @@ export class ReelsController extends Component {
             const ctrl = symbol.getComponent(SymbolController);
             this.reelMovement(symbol,ctrl)
         })
+    }
+    private eventEndReel() {
+        this.node.emit(NameEvent.REEL_STOPPED,);
     }
 
     private reelMovement(symbol: Node,ctrl: SymbolController) {

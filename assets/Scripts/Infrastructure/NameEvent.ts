@@ -1,4 +1,6 @@
 
 export enum NameEvent{
-    ON_SPIN = 'onSpin'
+    ON_SPIN = 'onSpin',
+    REEL_STOPPED = 'REEL_STOPPED',
+    CHECK_PRIZES = 'CHECK_PRIZES'
 }
