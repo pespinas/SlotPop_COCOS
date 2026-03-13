@@ -1,9 +1,8 @@
 
 import { _decorator, Component, Node, Sprite, tween, Vec3, TweenSystem,SpriteAtlas } from 'cc';
-import {EventManager} from "db://assets/Scripts/Core/EventManager";
-import {NameEvent} from "db://assets/Scripts/Core/NameEvent";
-import {SymbolController} from "db://assets/Scripts/Controller/SymbolController";
-import {SymbolRNG} from "db://assets/Scripts/Core/SymbolRNG";
+import {EventManager} from "db://assets/Scripts/Infrastructure/EventManager";
+import {NameEvent} from "db://assets/Scripts/Infrastructure/NameEvent";
+import {SymbolController} from "./SymbolController";
 const { ccclass, property } = _decorator;
 
 @ccclass('ReelsController')
@@ -25,11 +24,12 @@ export class ReelsController extends Component {
 
     private reelStartMovement(){
         this.symbols.slice().reverse().forEach((symbol) => {
-            this.reelMovement(symbol)
+            const ctrl = symbol.getComponent(SymbolController);
+            this.reelMovement(symbol,ctrl)
         })
     }
 
-    private reelMovement(symbol: Node) {
+    private reelMovement(symbol: Node,ctrl: SymbolController) {
         const moveStep = () => {
             const distanceToTravel = symbol.position.y - this.minY;
             const targetY = symbol.position.y;
@@ -43,7 +43,6 @@ export class ReelsController extends Component {
                 .to(symbolDuration, {position: new Vec3(0, this.minY, 0)}, {easing: "quartIn"})
                 .call(() => {
                     symbol.setPosition(symbol.position.x, this.maxY, symbol.position.z);
-                    const ctrl = symbol.getComponent(SymbolController);
                     ctrl.setNewSprite();
                 })
                 .to(

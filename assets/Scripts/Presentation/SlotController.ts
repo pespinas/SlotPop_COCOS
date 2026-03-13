@@ -1,8 +1,8 @@
 
 import { _decorator, Component,instantiate, Node,Prefab } from 'cc';
-import { NameEvent } from './../Core/NameEvent';
-import { EventManager } from './../Core/EventManager';
-import { SymbolRNG } from './../Core/SymbolRNG';
+import { NameEvent } from '../Infrastructure/NameEvent';
+import { EventManager } from '../Infrastructure/EventManager';
+import { SymbolRNG } from '../Domain/SymbolRNG';
 import { SymbolController } from './SymbolController';
 import { ReelsController } from './ReelsController';
 const { ccclass, property } = _decorator;

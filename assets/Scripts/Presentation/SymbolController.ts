@@ -1,5 +1,5 @@
 import {_decorator, Component, Sprite, SpriteAtlas} from 'cc';
-import {SymbolRNG} from 'db://assets/Scripts/Core/SymbolRNG';
+import {SymbolRNG} from "db://assets/Scripts/Domain/SymbolRNG";
 
 const { ccclass, property } = _decorator;
  
@@ -8,8 +8,6 @@ export class SymbolController extends Component{
 
     @property(SpriteAtlas)
     public symbolAtlas: SpriteAtlas = null;
-    @property([String])
-    public spriteNames: string[] = ["125","126","127","130","131","132","133"];
 
     private sprite: Sprite;
     private rng: SymbolRNG
@@ -21,9 +19,8 @@ export class SymbolController extends Component{
         this.rng = rng;
     }
     public setNewSprite() {
-        const index = this.rng.randomIndexSymbol();
-        const name = this.spriteNames[index];
-        this.sprite.spriteFrame =this.symbolAtlas.getSpriteFrame(name);
+        const symbolId = this.rng.randomIndexSymbol();
+        this.sprite.spriteFrame = this.symbolAtlas.getSpriteFrame(symbolId);
     }
 
 
