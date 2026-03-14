@@ -20,6 +20,8 @@ export class SlotController extends Component {
     config: PresentConfig = null;
 
     private globalRng = new SymbolRNG();
+    private resultSlot: string[][] = [];
+
 
     onLoad(){
         this.masks.forEach((mask,index) => {
@@ -39,9 +41,16 @@ export class SlotController extends Component {
                 ctrl.setNewSprite();
             });
         });
+        EventManager.on(NameEvent.REEL_STOPPED, this.EndReelResult, this);
+    }
+    onDestroy(){
+        EventManager.off(NameEvent.REEL_STOPPED, this.EndReelResult, this);
     }
     private onSpinClick(){
         EventManager.emit(NameEvent.ON_SPIN, true);
+    }
+    private EndReelResult(data: { symbols: string[], index: number }){
+        this.resultSlot[data.index] = data.symbols;
     }
 
 }
