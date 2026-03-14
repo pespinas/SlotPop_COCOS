@@ -9,11 +9,15 @@ const { ccclass, property } = _decorator;
 export class ReelsController extends Component {
     @property({ type: [Node] })
     public symbols: Node[] = [];
+    private _symbolCtrl: SymbolController[] = [];
 
     public reelIndex: number = 0;
     private minY = 0;
     private maxY = 0;
     private duration = 0;
+    private count= 0;
+
+    private result: string[]=[];
 
 
     public init(index: number, bottomY: number, topY: number, fallDuration: number) {
@@ -25,6 +29,10 @@ export class ReelsController extends Component {
 
     onLoad () {
         EventManager.on(NameEvent.ON_SPIN, this.reelStartMovement, this);
+        this.symbols.forEach((symbol) => {
+            const ctrl = symbol.getComponent(SymbolController);
+            this._symbolCtrl.push(ctrl);
+        })
 
     }
     onDestroy () {
@@ -32,13 +40,18 @@ export class ReelsController extends Component {
     }
 
     private reelStartMovement(){
-        this.symbols.slice().reverse().forEach((symbol) => {
-            const ctrl = symbol.getComponent(SymbolController);
-            this.reelMovement(symbol,ctrl)
+        this.symbols.forEach((symbol,index) => {
+            const ctrl = this._symbolCtrl[index];
+            this.reelMovement(symbol,ctrl);
         })
     }
     private eventEndReel() {
-        this.node.emit(NameEvent.REEL_STOPPED,);
+        this._symbolCtrl.forEach((ctrl,index) => {
+            if (index === 0) return;
+            this.result.push(ctrl.SymbolName);
+        })
+        this.node.emit(NameEvent.REEL_STOPPED,this.result);
+        this.result.length = 0;
     }
 
     private reelMovement(symbol: Node,ctrl: SymbolController) {
@@ -63,6 +76,7 @@ export class ReelsController extends Component {
                     { easing: 'bounceOut' }
                 )
                 .start();
+            this.eventEndReel();
         };
         moveStep();
     }

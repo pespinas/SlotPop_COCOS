@@ -11,6 +11,7 @@ export class SymbolController extends Component{
 
     private sprite: Sprite;
     private rng: SymbolRNG
+    private _symbolName: string = "";
 
     onLoad() {
         this.sprite = this.getComponent(Sprite);
@@ -20,7 +21,11 @@ export class SymbolController extends Component{
     }
     public setNewSprite() {
         const symbolId = this.rng.randomIndexSymbol();
+        this._symbolName = symbolId;
         this.sprite.spriteFrame = this.symbolAtlas.getSpriteFrame(symbolId);
+    }
+    public get SymbolName(): string {
+        return this._symbolName
     }
 
 
