@@ -52,6 +52,7 @@ export class ReelsController extends Component {
         })
         this.node.emit(NameEvent.REEL_STOPPED,this.result);
         this.result.length = 0;
+        this.count = 0;
     }
 
     private reelMovement(symbol: Node,ctrl: SymbolController) {
@@ -75,8 +76,11 @@ export class ReelsController extends Component {
                     { position: new Vec3(symbol.position.x, targetY, symbol.position.z) },
                     { easing: 'bounceOut' }
                 )
+                .call(() =>{
+                    this.count++
+                    if (this.count == this.symbols.length)this.eventEndReel();
+                })
                 .start();
-            this.eventEndReel();
         };
         moveStep();
     }
