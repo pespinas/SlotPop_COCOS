@@ -1,44 +1,56 @@
 
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, Node} from 'cc';
+import {EventManager} from "../Infrastructure/EventManager";
+import {NameEvent} from "../Infrastructure/NameEvent";
 const { ccclass, property } = _decorator;
-
-/**
- * Predefined variables
- * Name = PrizesController
- * DateTime = Sat Mar 07 2026 18:41:12 GMT+0100 (hora estándar de Europa central)
- * Author = pespinas
- * FileBasename = PrizesController.ts
- * FileBasenameNoExtension = PrizesController
- * URL = db://assets/Scripts/PrizesController.ts
- * ManualUrl = https://docs.cocos.com/creator/3.4/manual/en/
- *
- */
  
 @ccclass('PrizesController')
 export class PrizesController extends Component {
-    // [1]
-    // dummy = '';
 
-    // [2]
-    // @property
-    // serializableDummy = 0;
-
-    start () {
-        // [3]
+        onLoad(){
+        EventManager.on(NameEvent.CHECK_PRIZES,this.checkSymbols,this);
+    }
+    onDestroy(){
+        EventManager.off(NameEvent.CHECK_PRIZES,this.checkSymbols,this);
     }
 
-    // update (deltaTime: number) {
-    //     // [4]
-    // }
-}
+    private checkSymbols(symbols: string[][]){
 
-/**
- * [1] Class member could be defined like this.
- * [2] Use `property` decorator if your want the member to be serializable.
- * [3] Your initialization goes here.
- * [4] Your update function goes here.
- *
- * Learn more about scripting: https://docs.cocos.com/creator/3.4/manual/en/scripting/
- * Learn more about CCClass: https://docs.cocos.com/creator/3.4/manual/en/scripting/decorator.html
- * Learn more about life-cycle callbacks: https://docs.cocos.com/creator/3.4/manual/en/scripting/life-cycle-callbacks.html
- */
+        let winningCoords: {x: number, y: number}[][] = [];
+        let winningSymbols: string[] = [];
+        let visited: boolean[][] = [];
+        for (let i = 0; i < symbols.length; i++) {
+            visited[i] = [];
+            for (let j = 0; j < symbols[i].length; j++) {
+                visited[i][j] = false;
+            }
+        }
+
+        for (let i = 0; i < symbols.length; i++) {
+            for (let j = 0; j < symbols[i].length; j++) {
+                if(!visited[i][j]){
+                    const target = symbols[i][j];
+                    const group = this.findGroup(symbols, visited, i, j, target);
+                    if (group.length >= 3) {
+                        winningCoords.push(group);
+                        winningSymbols.push(target);
+                    }
+                }
+            }
+        }
+    }
+     private findGroup(symbols: string[][],visited:boolean[][],col:number, row:number,target: string): {x: number, y: number}[]{
+        if (col < 0 || col >= symbols.length || row < 0 || row >= symbols[0].length) return [];
+        if (visited[col][row] || symbols[col][row] !== target) return [];
+        visited[col][row] = true;
+        let group = [{ x: col, y: row }];
+
+         group = group.concat(this.findGroup(symbols, visited, col + 1, row, target));
+         group = group.concat(this.findGroup(symbols, visited, col - 1, row, target));
+         group = group.concat(this.findGroup(symbols, visited, col, row + 1, target));
+         group = group.concat(this.findGroup(symbols, visited, col, row - 1, target));
+
+        return group;
+     }
+
+}

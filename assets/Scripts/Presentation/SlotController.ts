@@ -21,6 +21,7 @@ export class SlotController extends Component {
 
     private globalRng = new SymbolRNG();
     private resultSlot: string[][] = [];
+    private count: number = 0;
 
 
     onLoad(){
@@ -48,9 +49,15 @@ export class SlotController extends Component {
     }
     private onSpinClick(){
         EventManager.emit(NameEvent.ON_SPIN, true);
+        this.count = 0;
+        this.resultSlot = [];
     }
     private EndReelResult(data: { symbols: string[], index: number }){
         this.resultSlot[data.index] = data.symbols;
+        this.count++;
+        if(this.count == this.masks.length){
+            EventManager.emit(NameEvent.CHECK_PRIZES, this.resultSlot);
+        }
     }
 
 }

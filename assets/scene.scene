@@ -19,16 +19,19 @@
       },
       {
         "__id__": 4
+      },
+      {
+        "__id__": 37
       }
     ],
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 37
+      "__id__": 39
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 38
+      "__id__": 40
     },
     "_id": "1d070f52-ba4e-4e5e-b2d2-1929202320fe"
   },
@@ -88,7 +91,7 @@
     "_priority": 0,
     "_fov": 54.853,
     "_fovAxis": 0,
-    "_orthoHeight": 663,
+    "_orthoHeight": 664.6766169154229,
     "_near": 1,
     "_far": 1000,
     "_color": {
@@ -1259,25 +1262,79 @@
     "_id": "48DcqDfRNEUZYPLxDCfAsb"
   },
   {
+    "__type__": "cc.Node",
+    "_name": "Logic",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 1
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 38
+      }
+    ],
+    "_prefab": null,
+    "_lpos": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_lrot": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_lscale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_layer": 1073741824,
+    "_euler": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_id": "d04gT2C1tOkZCDYjwblvq2"
+  },
+  {
+    "__type__": "ab9f9MvfJBHE7yiDpBC/MzR",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 37
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "_id": "eaMxkr8IxGVIrX40CQSdkW"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "fileId": "1d070f52-ba4e-4e5e-b2d2-1929202320fe"
   },
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 39
-    },
-    "shadows": {
-      "__id__": 40
-    },
-    "_skybox": {
       "__id__": 41
     },
-    "fog": {
+    "shadows": {
       "__id__": 42
     },
-    "octree": {
+    "_skybox": {
       "__id__": 43
+    },
+    "fog": {
+      "__id__": 44
+    },
+    "octree": {
+      "__id__": 45
     }
   },
   {

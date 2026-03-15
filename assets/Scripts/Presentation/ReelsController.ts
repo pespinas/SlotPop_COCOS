@@ -50,7 +50,7 @@ export class ReelsController extends Component {
             if (index === 0) return;
             this.result.push(ctrl.SymbolName);
         })
-        EventManager.emit(NameEvent.REEL_STOPPED,{symbols: this.result, index: this.reelIndex});
+        EventManager.emit(NameEvent.REEL_STOPPED,{symbols:[...this.result], index: this.reelIndex});
         this.result.length = 0;
         this.count = 0;
     }
