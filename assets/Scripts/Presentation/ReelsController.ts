@@ -84,4 +84,7 @@ export class ReelsController extends Component {
         };
         moveStep();
     }
+    public startWinAnimation(id: number){
+
+    }
 }

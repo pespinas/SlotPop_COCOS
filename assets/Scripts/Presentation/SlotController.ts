@@ -21,6 +21,7 @@ export class SlotController extends Component {
 
     private globalRng = new SymbolRNG();
     private resultSlot: string[][] = [];
+    private reelControllers: ReelsController[] = [];
     private count: number = 0;
 
 
@@ -29,6 +30,7 @@ export class SlotController extends Component {
             const newReel = instantiate (this.symbolPref);
             mask.addChild(newReel);
             const reelCtrl = newReel.getComponent(ReelsController);
+            this.reelControllers.push(reelCtrl);
             reelCtrl.init(
                 index,
                 this.config.bottomY,
@@ -43,14 +45,24 @@ export class SlotController extends Component {
             });
         });
         EventManager.on(NameEvent.REEL_STOPPED, this.EndReelResult, this);
+        EventManager.on(NameEvent.PRIZES_FOUND, this.onPrizesFound, this);
     }
     onDestroy(){
         EventManager.off(NameEvent.REEL_STOPPED, this.EndReelResult, this);
+        EventManager.off(NameEvent.PRIZES_FOUND, this.onPrizesFound, this);
     }
     private onSpinClick(){
         EventManager.emit(NameEvent.ON_SPIN, true);
         this.count = 0;
         this.resultSlot = [];
+    }
+    private onPrizesFound(allPrizes: {x: number, y: number}[][]){
+        for (let i = 0; i < allPrizes.length; i++) {
+            for (let j = 0; j < allPrizes[i].length; j++) {
+                let coord = allPrizes[i][j];
+                this.reelControllers[coord.x].startWinAnimation(coord.y);
+            }
+        }
     }
     private EndReelResult(data: { symbols: string[], index: number }){
         this.resultSlot[data.index] = data.symbols;
