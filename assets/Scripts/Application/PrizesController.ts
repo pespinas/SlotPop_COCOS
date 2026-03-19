@@ -34,6 +34,7 @@ export class PrizesController extends Component {
                     if (group.length >= 3) {
                         winningCoords.push(group);
                         winningSymbols.push(target);
+                        EventManager.emit(NameEvent.PRIZES_FOUND, winningCoords)
                     }
                 }
             }

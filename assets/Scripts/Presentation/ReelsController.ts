@@ -16,8 +16,8 @@ export class ReelsController extends Component {
     private maxY = 0;
     private duration = 0;
     private count= 0;
-
     private result: string[]=[];
+    private visualOrder:{name: string, y: number, node: Node}[]= [];
 
 
     public init(index: number, bottomY: number, topY: number, fallDuration: number) {
@@ -44,12 +44,20 @@ export class ReelsController extends Component {
             const ctrl = this._symbolCtrl[index];
             this.reelMovement(symbol,ctrl);
         })
+        this.visualOrder = [];
     }
     private eventEndReel() {
-        this._symbolCtrl.forEach((ctrl,index) => {
-            if (index === 0) return;
-            this.result.push(ctrl.SymbolName);
-        })
+        this.visualOrder = this._symbolCtrl.map(ctrl => ({
+            name: ctrl.SymbolName,
+            y: ctrl.node.position.y,
+            node: ctrl.node
+        }));
+        this.visualOrder.sort((a,b) => a.y - b.y);
+        this.visualOrder.shift();
+        this.visualOrder.forEach((ctrl,index) => {
+            this.result.push(ctrl.name);
+        });
+
         EventManager.emit(NameEvent.REEL_STOPPED,{symbols:[...this.result], index: this.reelIndex});
         this.result.length = 0;
         this.count = 0;
@@ -60,7 +68,6 @@ export class ReelsController extends Component {
             const distanceToTravel = symbol.position.y - this.minY;
             const targetY = symbol.position.y;
             const speed = (this.maxY - this.minY) / this.duration;
-
             const symbolDuration = distanceToTravel / speed;
             const fallInDist = this.maxY - targetY;
             const fallInDuration = Math.max(1.1, fallInDist / speed);
@@ -84,7 +91,17 @@ export class ReelsController extends Component {
         };
         moveStep();
     }
-    public startWinAnimation(id: number){
-
+    public startWinAnimation(winSymbol: number){
+        const moveStep =() =>{
+            const symbol = this.visualOrder[winSymbol].node;
+            tween(symbol)
+                .to(0.15, {scale: new Vec3(1.3, 1.3, 1) }, { easing: 'backOut' })
+                .to(0.1, {scale: new Vec3(0, 0, 0) }, { easing: 'backIn' })
+                .call(() => {
+                    console.log("¡Boom! Símbolo eliminado visualmente");
+                })
+                .start();
+        };
+        moveStep();
     }
 }
