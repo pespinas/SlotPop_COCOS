@@ -53,7 +53,7 @@ export class ReelsController extends Component {
             node: ctrl.node
         }));
         this.visualOrder.sort((a,b) => a.y - b.y);
-        this.visualOrder.shift();
+        this.visualOrder.pop();
         this.visualOrder.forEach((ctrl,index) => {
             this.result.push(ctrl.name);
         });
