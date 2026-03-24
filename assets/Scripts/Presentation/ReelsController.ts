@@ -17,6 +17,7 @@ export class ReelsController extends Component {
     private duration = 0;
     private count= 0;
     private result: string[]=[];
+    private allreelOrder:{name: string, y: number, node: Node, currentIndex: number}[]= [];
     private visualOrder:{name: string, y: number, node: Node}[]= [];
 
 
@@ -47,12 +48,15 @@ export class ReelsController extends Component {
         this.visualOrder = [];
     }
     private eventEndReel() {
-        this.visualOrder = this._symbolCtrl.map(ctrl => ({
+        const sortedByY = this._symbolCtrl.sort((a, b) => a.node.position.y - b.node.position.y);
+        this.allreelOrder = sortedByY.map((ctrl,index) => ({
             name: ctrl.SymbolName,
             y: ctrl.node.position.y,
-            node: ctrl.node
+            node: ctrl.node,
+            currentIndex: index
         }));
-        this.visualOrder.sort((a,b) => a.y - b.y);
+        this.allreelOrder.sort((a,b) => a.y - b.y);
+        this.visualOrder = [...this.allreelOrder];
         this.visualOrder.pop();
         this.visualOrder.forEach((ctrl,index) => {
             this.result.push(ctrl.name);
@@ -75,14 +79,12 @@ export class ReelsController extends Component {
                 .delay(distanceToTravel / speed * 0.1 * this.reelIndex)
                 .to(symbolDuration, {position: new Vec3(0, this.minY, 0)}, {easing: "quartIn"})
                 .call(() => {
+                    symbol.setScale(new Vec3(0.8,0.8,1));
                     symbol.setPosition(symbol.position.x, this.maxY, symbol.position.z);
                     ctrl.setNewSprite();
+
                 })
-                .to(
-                    fallInDuration,
-                    { position: new Vec3(symbol.position.x, targetY, symbol.position.z) },
-                    { easing: 'bounceOut' }
-                )
+                .to(fallInDuration, { position: new Vec3(symbol.position.x, targetY, symbol.position.z) }, { easing: 'bounceOut' })
                 .call(() =>{
                     this.count++
                     if (this.count == this.symbols.length)this.eventEndReel();
@@ -91,17 +93,45 @@ export class ReelsController extends Component {
         };
         moveStep();
     }
-    public startWinAnimation(winSymbol: number){
-        const moveStep =() =>{
-            const symbol = this.visualOrder[winSymbol].node;
+    public startWinAnimation(winSymbol: number[]){
+        const winSize= winSymbol.length;
+        winSymbol.forEach(rowIndex => {
+            const symbol = this.visualOrder[rowIndex].node;
             tween(symbol)
                 .to(0.15, {scale: new Vec3(1.3, 1.3, 1) }, { easing: 'backOut' })
                 .to(0.1, {scale: new Vec3(0, 0, 0) }, { easing: 'backIn' })
                 .call(() => {
-                    console.log("¡Boom! Símbolo eliminado visualmente");
                 })
                 .start();
-        };
-        moveStep();
+        })
+        console.log(this.visualOrder)
+        this.scheduleOnce(() => {
+            this.continueFall(winSymbol, winSize);
+        }, 1);
+    }
+
+    private continueFall(winSymbol: number[], numSymbol: number){
+        const winningSymbols = this.allreelOrder.filter(symbol =>
+            winSymbol.indexOf(symbol.currentIndex) != -1
+        );
+        const notWinSymbols = this.allreelOrder.filter(symbol =>
+            winSymbol.indexOf(symbol.currentIndex) == -1
+        );
+        notWinSymbols.sort((a, b) => a.y - b.y);
+        winningSymbols.sort((a, b) => a.y - b.y);
+
+        let freeSpot = 0;
+        notWinSymbols.forEach((item, i) => {
+            const targetY = this.allreelOrder[freeSpot].y;
+            tween(item.node)
+                .to(0.3, { position: new Vec3(0, targetY, 0) }, { easing: "bounceOut" })
+                .call(() => {
+                    // Actualizamos los datos para que el símbolo "sepa" donde está ahora
+                    item.y = targetY;
+                    item.currentIndex = freeSpot;
+                })
+                .start();
+            freeSpot++;
+        });
     }
 }

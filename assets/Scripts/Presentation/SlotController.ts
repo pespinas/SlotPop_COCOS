@@ -1,11 +1,11 @@
-
-import { _decorator, Component,instantiate, Node,Prefab } from 'cc';
-import { NameEvent } from '../Infrastructure/NameEvent';
-import { EventManager } from '../Infrastructure/EventManager';
-import { SymbolRNG } from '../Domain/SymbolRNG';
-import { SymbolController } from './SymbolController';
-import { ReelsController } from './ReelsController';
+import {_decorator, Component, instantiate, Node, Prefab} from 'cc';
+import {NameEvent} from '../Infrastructure/NameEvent';
+import {EventManager} from '../Infrastructure/EventManager';
+import {SymbolRNG} from '../Domain/SymbolRNG';
+import {SymbolController} from './SymbolController';
+import {ReelsController} from './ReelsController';
 import {PresentConfig} from "./PresentConfig";
+
 const { ccclass, property } = _decorator;
 
 @ccclass('SlotController')
@@ -57,12 +57,18 @@ export class SlotController extends Component {
         this.resultSlot = [];
     }
     private onPrizesFound(allPrizes: {x: number, y: number}[][]){
+        const rowsSymbols: number[][]= this.reelControllers.map(() =>[]);
         for (let i = 0; i < allPrizes.length; i++) {
             for (let j = 0; j < allPrizes[i].length; j++) {
                 let coord = allPrizes[i][j];
-                this.reelControllers[coord.x].startWinAnimation(coord.y);
+                rowsSymbols[coord.x].push(coord.y);
             }
         }
+        rowsSymbols.forEach((rows,index) => {
+            if (rows.length >0){
+                this.reelControllers[index].startWinAnimation(rows);
+            }
+        })
     }
     private EndReelResult(data: { symbols: string[], index: number }){
         this.resultSlot[data.index] = data.symbols;
