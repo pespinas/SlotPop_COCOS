@@ -64,11 +64,12 @@ export class SlotController extends Component {
                 rowsSymbols[coord.x].push(coord.y);
             }
         }
+        this.scheduleOnce(() => {
         rowsSymbols.forEach((rows,index) => {
-            if (rows.length >0){
                 this.reelControllers[index].startWinAnimation(rows);
-            }
         })
+        }, 0.2);
+        this.count = 0;
     }
     private EndReelResult(data: { symbols: string[], index: number }){
         this.resultSlot[data.index] = data.symbols;

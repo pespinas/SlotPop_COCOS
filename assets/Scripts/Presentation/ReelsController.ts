@@ -17,8 +17,8 @@ export class ReelsController extends Component {
     private duration = 0;
     private count= 0;
     private result: string[]=[];
-    private allreelOrder:{name: string, y: number, node: Node, currentIndex: number}[]= [];
-    private visualOrder:{name: string, y: number, node: Node}[]= [];
+    private allreelOrder:{name: string, y: number, currentIndex: number,ctrl: any;}[]= [];
+    private visualOrder:{name: string, y: number, ctrl: any}[]= [];
 
 
     public init(index: number, bottomY: number, topY: number, fallDuration: number) {
@@ -41,6 +41,7 @@ export class ReelsController extends Component {
     }
 
     private reelStartMovement(){
+        this._symbolCtrl.sort((a, b) => a.node.position.y - b.node.position.y);
         this.symbols.forEach((symbol,index) => {
             const ctrl = this._symbolCtrl[index];
             this.reelMovement(symbol,ctrl);
@@ -48,11 +49,11 @@ export class ReelsController extends Component {
         this.visualOrder = [];
     }
     private eventEndReel() {
-        const sortedByY = this._symbolCtrl.sort((a, b) => a.node.position.y - b.node.position.y);
+        const sortedByY = [...this._symbolCtrl].sort((a, b) => a.node.position.y - b.node.position.y);
         this.allreelOrder = sortedByY.map((ctrl,index) => ({
             name: ctrl.SymbolName,
             y: ctrl.node.position.y,
-            node: ctrl.node,
+            ctrl: ctrl,
             currentIndex: index
         }));
         this.allreelOrder.sort((a,b) => a.y - b.y);
@@ -63,6 +64,7 @@ export class ReelsController extends Component {
         });
 
         EventManager.emit(NameEvent.REEL_STOPPED,{symbols:[...this.result], index: this.reelIndex});
+        console.log(this.result);
         this.result.length = 0;
         this.count = 0;
     }
@@ -79,10 +81,10 @@ export class ReelsController extends Component {
                 .delay(distanceToTravel / speed * 0.1 * this.reelIndex)
                 .to(symbolDuration, {position: new Vec3(0, this.minY, 0)}, {easing: "quartIn"})
                 .call(() => {
-                    symbol.setScale(new Vec3(0.8,0.8,1));
                     symbol.setPosition(symbol.position.x, this.maxY, symbol.position.z);
-                    ctrl.setNewSprite();
-
+                    this.scheduleOnce(() => {
+                        ctrl.setNewSprite();
+                    },0.1)
                 })
                 .to(fallInDuration, { position: new Vec3(symbol.position.x, targetY, symbol.position.z) }, { easing: 'bounceOut' })
                 .call(() =>{
@@ -96,18 +98,17 @@ export class ReelsController extends Component {
     public startWinAnimation(winSymbol: number[]){
         const winSize= winSymbol.length;
         winSymbol.forEach(rowIndex => {
-            const symbol = this.visualOrder[rowIndex].node;
+            const symbol = this.visualOrder[rowIndex].ctrl.node;
             tween(symbol)
                 .to(0.15, {scale: new Vec3(1.3, 1.3, 1) }, { easing: 'backOut' })
-                .to(0.1, {scale: new Vec3(0, 0, 0) }, { easing: 'backIn' })
+                .to(0.30, {scale: new Vec3(0, 0, 0) }, { easing: 'backIn' })
                 .call(() => {
                 })
                 .start();
         })
-        console.log(this.visualOrder)
         this.scheduleOnce(() => {
             this.continueFall(winSymbol, winSize);
-        }, 1);
+        }, 0.5);
     }
 
     private continueFall(winSymbol: number[], numSymbol: number){
@@ -119,19 +120,41 @@ export class ReelsController extends Component {
         );
         notWinSymbols.sort((a, b) => a.y - b.y);
         winningSymbols.sort((a, b) => a.y - b.y);
+        let countSymbol=0;
+        const onFinish = () => {
+            countSymbol++;
+            if (countSymbol === this.allreelOrder.length) {
+                this.eventEndReel();
+            }
+        };
+
 
         let freeSpot = 0;
-        notWinSymbols.forEach((item, i) => {
+        notWinSymbols.forEach((symbol, i) => {
             const targetY = this.allreelOrder[freeSpot].y;
-            tween(item.node)
+            tween(symbol.ctrl.node)
                 .to(0.3, { position: new Vec3(0, targetY, 0) }, { easing: "bounceOut" })
                 .call(() => {
-                    // Actualizamos los datos para que el símbolo "sepa" donde está ahora
-                    item.y = targetY;
-                    item.currentIndex = freeSpot;
+                    symbol.y = targetY;
+                    symbol.currentIndex = freeSpot;
+                    onFinish();
                 })
                 .start();
             freeSpot++;
         });
+
+        winningSymbols.forEach((symbol, i) => {
+            symbol.ctrl.node.setPosition(0, this.maxY, 0);
+            symbol.ctrl.setNewSprite();
+            symbol.ctrl.node.setScale(new Vec3(0.8,0.8,0));
+            const targetY = this.allreelOrder[freeSpot].y;
+            tween(symbol.ctrl.node)
+                .to(0.3, { position: new Vec3(0, targetY, 0) }, { easing: "bounceOut" })
+                .call(() => {
+                    onFinish();
+                })
+                .start();
+            freeSpot++;
+        })
     }
 }
