@@ -42,9 +42,9 @@ export class ReelsController extends Component {
 
     private reelStartMovement(){
         this._symbolCtrl.sort((a, b) => a.node.position.y - b.node.position.y);
-        this.symbols.forEach((symbol,index) => {
+        this._symbolCtrl.forEach((symbol,index) => {
             const ctrl = this._symbolCtrl[index];
-            this.reelMovement(symbol,ctrl);
+            this.reelMovement(symbol.node,ctrl);
         })
         this.visualOrder = [];
     }
@@ -82,9 +82,7 @@ export class ReelsController extends Component {
                 .to(symbolDuration, {position: new Vec3(0, this.minY, 0)}, {easing: "quartIn"})
                 .call(() => {
                     symbol.setPosition(symbol.position.x, this.maxY, symbol.position.z);
-                    this.scheduleOnce(() => {
-                        ctrl.setNewSprite();
-                    },0.1)
+                    ctrl.setNewSprite();
                 })
                 .to(fallInDuration, { position: new Vec3(symbol.position.x, targetY, symbol.position.z) }, { easing: 'bounceOut' })
                 .call(() =>{
