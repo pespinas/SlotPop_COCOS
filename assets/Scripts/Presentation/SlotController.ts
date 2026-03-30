@@ -1,4 +1,4 @@
-import {_decorator, Component, instantiate, Node, Prefab} from 'cc';
+import {_decorator, Component, instantiate, Node, Prefab,Button} from 'cc';
 import {NameEvent} from '../Infrastructure/NameEvent';
 import {EventManager} from '../Infrastructure/EventManager';
 import {SymbolRNG} from '../Domain/SymbolRNG';
@@ -15,6 +15,8 @@ export class SlotController extends Component {
     masks = [];
     @property({ type: Prefab })
     symbolPref: Prefab;
+    @property({ type: [Button] })
+    spinButton: Button;
 
     @property({ type: PresentConfig})
     config: PresentConfig = null;
@@ -52,9 +54,13 @@ export class SlotController extends Component {
         EventManager.off(NameEvent.PRIZES_FOUND, this.onPrizesFound, this);
     }
     private onSpinClick(){
-        EventManager.emit(NameEvent.ON_SPIN, true);
+        EventManager.emit(NameEvent.REQUEST_SPIN, true);
+        this.stateSpinButton(false);
         this.count = 0;
         this.resultSlot = [];
+    }
+    public stateSpinButton(state:boolean) {
+        this.spinButton.interactable = state;
     }
     private onPrizesFound(allPrizes: {x: number, y: number}[][]){
         const rowsSymbols: number[][]= this.reelControllers.map(() =>[]);

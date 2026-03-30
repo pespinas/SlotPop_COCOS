@@ -64,7 +64,6 @@ export class ReelsController extends Component {
         });
 
         EventManager.emit(NameEvent.REEL_STOPPED,{symbols:[...this.result], index: this.reelIndex});
-        console.log(this.result);
         this.result.length = 0;
         this.count = 0;
     }

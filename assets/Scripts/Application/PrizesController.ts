@@ -40,6 +40,10 @@ export class PrizesController extends Component {
         }
         if (winningCoords.length > 0) {
             EventManager.emit(NameEvent.PRIZES_FOUND, winningCoords);
+            EventManager.emit(NameEvent.PRIZES_PAY, winningSymbols);
+        }
+        else{
+            EventManager.emit(NameEvent.REQUEST_STOP, false);
         }
     }
      private findGroup(symbols: string[][],visited:boolean[][],col:number, row:number,target: string): {x: number, y: number}[]{
