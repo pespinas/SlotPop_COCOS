@@ -1,0 +1,11 @@
+{
+  "UI_GAME": {
+    "LBL_IDLE": "CLICK IN THE REEL FOR PLAY",
+    "LBL_WIN_TOTAL": "TOTAL WIN:",
+    "LBL_WIN": "WIN:"
+  },
+  "UI_ERRORS": {
+    "NO_BALANCE": "NO POKEMONEY MAN",
+    "CONN_ERROR": "Error de conexión"
+  }
+}

@@ -1,5 +1,5 @@
 import {_decorator, Component, Sprite, SpriteAtlas} from 'cc';
-import {SymbolRNG} from "db://assets/Scripts/Domain/SymbolRNG";
+import {SymbolRNG} from "../Domain/SymbolRNG";
 
 const { ccclass, property } = _decorator;
  
