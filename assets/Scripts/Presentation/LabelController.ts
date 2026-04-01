@@ -9,7 +9,7 @@ export class LabelController extends Component {
     public label: Label;
 
     idleText(){
-        this.label.string = LocalizationService.get('LBL_IDLE');
+        this.label.string = LocalizationService.getIU('LBL_IDLE');
     }
 
 }

@@ -75,15 +75,15 @@ export class ReelsController extends Component {
             const speed = (this.maxY - this.minY) / this.duration;
             const symbolDuration = distanceToTravel / speed;
             const fallInDist = this.maxY - targetY;
-            const fallInDuration = Math.max(1.1, fallInDist / speed);
+            const fallInDuration = Math.max(0.9, fallInDist / speed);
             tween(symbol)
                 .delay(distanceToTravel / speed * 0.1 * this.reelIndex)
                 .to(symbolDuration, {position: new Vec3(0, this.minY, 0)}, {easing: "quartIn"})
                 .call(() => {
-                    symbol.setPosition(symbol.position.x, this.maxY, symbol.position.z);
+                    symbol.setPosition(0, this.maxY, 0);
                     ctrl.setNewSprite();
                 })
-                .to(fallInDuration, { position: new Vec3(symbol.position.x, targetY, symbol.position.z) }, { easing: 'bounceOut' })
+                .to(fallInDuration, { position: new Vec3(0, targetY, 0) }, { easing: 'bounceOut' })
                 .call(() =>{
                     this.count++
                     if (this.count == this.symbols.length)this.eventEndReel();
