@@ -16,7 +16,7 @@ export class GameManager extends Component {
     public slotController: SlotController;
     public static Instance: GameManager;
 
-    onLoad(){
+    protected onLoad(){
         EventManager.on(NameEvent.REQUEST_SPIN, this.buttonState, this)
         EventManager.on(NameEvent.REQUEST_STOP, this.buttonState, this)
 
@@ -24,7 +24,7 @@ export class GameManager extends Component {
         GameManager.Instance = this;
         this.updateLabel();
     }
-    onDestroy() {
+    protected onDestroy() {
         EventManager.off(NameEvent.REQUEST_SPIN, this.buttonState)
         EventManager.off(NameEvent.REQUEST_STOP, this.buttonState)
     }

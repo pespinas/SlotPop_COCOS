@@ -2,6 +2,7 @@ import {SymbolConfig} from "db://assets/Scripts/Domain/GameConfig";
 
 export class SymbolRNG{
     private probabilitiesSymbol:number[] = [30, 25, 20, 20, 10, 5, 1];
+    private allSymbols = Object.keys(SymbolConfig.SYMBOL_DATA);
 
     public randomIndexSymbol(){
         let totalWeight = 0;
@@ -14,9 +15,9 @@ export class SymbolRNG{
             cum += this.probabilitiesSymbol[i];
             if(randomValue < cum)
             {
-                return SymbolConfig.IDS[i];
+                return this.allSymbols[i];
             }
         }
-        return SymbolConfig.IDS[0];
+        return this.allSymbols[0];
     }
 }

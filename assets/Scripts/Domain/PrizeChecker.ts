@@ -25,10 +25,13 @@ export class PrizeChecker {
             }
         }
         if (winningCoords.length > 0) {
-            return winningCoords;
+            return {
+                coord: winningCoords,
+                symbols: winningSymbols
+            };
         }
         else{
-            return 0;
+            return null
         }
     }
     private findGroup(symbols: string[][],visited:boolean[][],col:number, row:number,target: string): {x: number, y: number}[]{

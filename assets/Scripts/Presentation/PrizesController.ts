@@ -17,9 +17,13 @@ export class PrizesController extends Component{
         EventManager.off(NameEvent.CHECK_PRIZES,this.checkWin,this);
     }
     private checkWin(symbols: string[][]) {
-        const winningCoords = this.prizeChecker.checkSymbols(symbols);
-        if (winningCoords != 0) {
-            EventManager.emit(NameEvent.PRIZES_FOUND, winningCoords);
+        const result = this.prizeChecker.checkSymbols(symbols);
+        if (result) {
+            const coordW = result.coord;
+            const nameSymb = result.symbols;
+
+            EventManager.emit(NameEvent.PRIZES_FOUND, coordW);
+            EventManager.emit(NameEvent.PRIZES_PAY, nameSymb);
         }
         else{
             EventManager.emit(NameEvent.REQUEST_STOP, false);
