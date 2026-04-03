@@ -9,10 +9,11 @@ const { ccclass, property } = _decorator;
 export class PrizesController extends Component{
 
     private prizeChecker = new PrizeChecker();
-    onLoad(){
+
+    protected onLoad(){
         EventManager.on(NameEvent.CHECK_PRIZES,this.checkWin,this);
     }
-    onDestroy(){
+    protected onDestroy(){
         EventManager.off(NameEvent.CHECK_PRIZES,this.checkWin,this);
     }
     private checkWin(symbols: string[][]) {

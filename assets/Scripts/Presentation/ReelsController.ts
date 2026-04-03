@@ -28,7 +28,7 @@ export class ReelsController extends Component {
         this.duration = fallDuration;
     }
 
-    onLoad () {
+    protected onLoad () {
         EventManager.on(NameEvent.ON_SPIN, this.reelStartMovement, this);
         this.symbols.forEach((symbol) => {
             const ctrl = symbol.getComponent(SymbolController);
@@ -36,7 +36,7 @@ export class ReelsController extends Component {
         })
 
     }
-    onDestroy () {
+    protected onDestroy () {
         EventManager.off(NameEvent.ON_SPIN, this.reelStartMovement, this);
     }
 

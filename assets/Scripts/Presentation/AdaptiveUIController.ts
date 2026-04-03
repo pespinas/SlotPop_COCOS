@@ -34,7 +34,6 @@ export class AdaptiveUIController extends Component {
         let orthoHeight = designSize.height / 2;
 
         if (viewportAspect > designAspect) {
-            // Pantalla más ancha: ajustar altura ortho
             orthoHeight = (designSize.width / viewportAspect) / 2;
         }
 

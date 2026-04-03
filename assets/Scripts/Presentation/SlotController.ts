@@ -27,7 +27,7 @@ export class SlotController extends Component {
     private count: number = 0;
 
 
-    onLoad(){
+    protected onLoad(){
         this.masks.forEach((mask,index) => {
             const newReel = instantiate (this.symbolPref);
             mask.addChild(newReel);
@@ -49,7 +49,7 @@ export class SlotController extends Component {
         EventManager.on(NameEvent.REEL_STOPPED, this.EndReelResult, this);
         EventManager.on(NameEvent.PRIZES_FOUND, this.onPrizesFound, this);
     }
-    onDestroy(){
+    protected onDestroy(){
         EventManager.off(NameEvent.REEL_STOPPED, this.EndReelResult, this);
         EventManager.off(NameEvent.PRIZES_FOUND, this.onPrizesFound, this);
     }

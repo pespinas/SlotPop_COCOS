@@ -13,7 +13,7 @@ export class SymbolController extends Component{
     private rng: SymbolRNG
     private _symbolName: string = "";
 
-    onLoad() {
+    protected onLoad() {
         this.sprite = this.getComponent(Sprite);
     }
     public init(rng: SymbolRNG) {
