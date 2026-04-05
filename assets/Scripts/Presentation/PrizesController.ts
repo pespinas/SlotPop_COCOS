@@ -3,12 +3,15 @@ import { _decorator, Component, Node} from 'cc';
 import {EventManager} from "../Infrastructure/EventManager";
 import {NameEvent} from "../Infrastructure/NameEvent";
 import { PrizeChecker } from "../Domain/PrizeChecker";
+import {PrizeCalculator} from "db://assets/Scripts/Application/PrizeCalculator";
 const { ccclass, property } = _decorator;
  
 @ccclass('PrizesController')
 export class PrizesController extends Component{
 
-    private prizeChecker = new PrizeChecker();
+    private prizeChecker:PrizeChecker = new PrizeChecker();
+    private symbolName:string = "";
+    private totalWin:number = 0;
 
     protected onLoad(){
         EventManager.on(NameEvent.CHECK_PRIZES,this.checkWin,this);
@@ -20,14 +23,24 @@ export class PrizesController extends Component{
         const result = this.prizeChecker.checkSymbols(symbols);
         if (result) {
             const coordW = result.coord;
-            const nameSymb = result.symbols;
-
             EventManager.emit(NameEvent.PRIZES_FOUND, coordW);
-            EventManager.emit(NameEvent.PRIZES_PAY, nameSymb);
+            this.prizeSymbol(result);
         }
         else{
             EventManager.emit(NameEvent.REQUEST_STOP, false);
+            this.totalWin = 0;
         }
+    }
+
+    private prizeSymbol(result){
+        for (let i = 0; i < result.coord.length; i++) {
+            for (let j = 0; j < result.symbols[i].length; j++) {
+                this.symbolName = result.symbols[i];
+            }
+            const prizeResult = PrizeCalculator.calculateWin(this.symbolName, result.coord[i].length);
+            this.totalWin += prizeResult;
+        }
+        EventManager.emit(NameEvent.PRIZES_PAY, this.totalWin);
     }
 
 }

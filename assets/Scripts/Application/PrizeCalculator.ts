@@ -1,21 +1,12 @@
+import {SymbolConfig} from "../Domain/GameConfig";
 
-import { _decorator, Component, Node } from 'cc';
-const { ccclass, property } = _decorator;
 
-@ccclass('PrizeCalculator')
-export class PrizeCalculator extends Component {
-    // [1]
-    // dummy = '';
+export class PrizeCalculator{
 
-    // [2]
-    // @property
-    // serializableDummy = 0;
+    private static symbolValues = SymbolConfig.SYMBOL_DATA;
 
-    start () {
-        // [3]
+    public static calculateWin(name:string, size: number){
+        const value = this.symbolValues[name] * size;
+        return value;
     }
-
-    // update (deltaTime: number) {
-    //     // [4]
-    // }
 }

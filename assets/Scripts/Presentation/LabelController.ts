@@ -8,8 +8,15 @@ export class LabelController extends Component {
     @property(Label)
     public label: Label;
 
-    idleText(){
+    public idleText(){
         this.label.string = LocalizationService.getIU('LBL_IDLE');
+    }
+
+    public wonText(won:number){
+        this.label.string = LocalizationService.getIU('LBL_WIN') + " " + won + "";
+    }
+    public totalWinText(won:number){
+        this.label.string = LocalizationService.getIU('LBL_WIN_TOTAL') + " " + won + "";
     }
 
 }
