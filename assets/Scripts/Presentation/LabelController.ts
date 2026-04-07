@@ -1,22 +1,35 @@
 
-import { _decorator, Component, Node,Label } from 'cc';
+import { _decorator, Component, SpriteFrame,Label,Sprite } from 'cc';
 import {LocalizationService} from "../Application/LocalizationService";
 const { ccclass, property } = _decorator;
  
 @ccclass('LabelController')
 export class LabelController extends Component {
     @property(Label)
-    public label: Label;
+    public labelTop: Label;
+    @property(Label)
+    public labelBottom: Label;
+    @property(Label)
+    public labelBet: Label;
+    @property(Sprite)
+    public betImage: Sprite = null!;
+    @property({ type: [SpriteFrame] })
+    public betImages: SpriteFrame[] = [];
+
 
     public idleText(){
-        this.label.string = LocalizationService.getIU('LBL_IDLE');
+        this.labelTop.string = LocalizationService.getIU('LBL_IDLE');
     }
 
     public wonText(won:number){
-        this.label.string = LocalizationService.getIU('LBL_WIN') + " " + won + "";
+        this.labelTop.string = LocalizationService.getIU('LBL_WIN') + " " + won + "";
     }
     public totalWinText(won:number){
-        this.label.string = LocalizationService.getIU('LBL_WIN_TOTAL') + " " + won + "";
+        this.labelBottom.string = LocalizationService.getIU('BALANCE') + " " + won + "";
+    }
+    public changeBet(betId:number, betValue:number){
+        this.betImage.spriteFrame = this.betImages[betId - 1];
+        this.labelBet.string = betValue.toString();
     }
 
 }

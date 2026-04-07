@@ -4,6 +4,7 @@ import {NameEvent} from "../Infrastructure/NameEvent";
 import {SlotController} from "../Presentation/SlotController";
 import {LabelController} from "../Presentation/LabelController";
 import {LocalizationService} from '../Application/LocalizationService';
+import {Balance} from "../Domain/Balance";
 
 const { ccclass, property } = _decorator;
  
@@ -17,6 +18,10 @@ export class GameManager extends Component {
     public slotController: SlotController;
     public static Instance: GameManager;
 
+    private betId: number;
+    private bet: number;
+    private balance: Balance = new Balance();
+
     protected onLoad(){
         EventManager.on(NameEvent.REQUEST_SPIN, this.buttonState, this)
         EventManager.on(NameEvent.REQUEST_STOP, this.buttonState, this)
@@ -24,6 +29,10 @@ export class GameManager extends Component {
 
         LocalizationService.init(this.labelText.json);
         GameManager.Instance = this;
+        this.betId = this.balance.getBetId();
+        this.bet = this.balance.getBet(this.betId);
+
+        this.updateBalance(0);
         this.updateLabel();
     }
     protected onDestroy() {
@@ -37,10 +46,27 @@ export class GameManager extends Component {
     }
     private wonLabel(value:number){
         this.label.wonText(value);
+        this.updateBalance(value);
+    }
+    private updateBalance(value:number){
+        this.balance.addMoney(value);
+        const total = this.balance.getBalance();
+        this.label.totalWinText(total);
+    }
+    private changeBet(){
+        this.balance.changeBet();
+        this.betId = this.balance.getBetId();
+        this.bet = this.balance.getBet(this.betId);
+        this.label.changeBet(this.betId, this.bet);
+    }
+    private updateBalanceOnSpin(){
+        this.balance.spendMoney(this.bet);
+        this.updateBalance(0);
     }
     private buttonState(state: boolean){
         if(state){
             EventManager.emit(NameEvent.ON_SPIN, true);
+            this.updateBalanceOnSpin();
         }
         else{
             this.scheduleOnce(() => {
