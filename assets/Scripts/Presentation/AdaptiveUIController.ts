@@ -25,7 +25,7 @@ export class AdaptiveUIController extends Component {
 
         const canvasSize = ccView.getCanvasSize();
         const designSize = ccView.getDesignResolutionSize();
-        
+
         const deviceAspect = canvasSize.width / canvasSize.height;
         const designAspect = designSize.width / designSize.height;
 

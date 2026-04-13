@@ -4,7 +4,7 @@ import {NameEvent} from "../Infrastructure/NameEvent";
 import {SlotController} from "../Presentation/SlotController";
 import {LabelController} from "../Presentation/LabelController";
 import {LocalizationService} from '../Application/LocalizationService';
-import {Balance} from "../Domain/Balance";
+import {Balance} from "../Domain/indexD";
 
 const { ccclass, property } = _decorator;
  
@@ -40,7 +40,9 @@ export class GameManager extends Component {
         EventManager.off(NameEvent.REQUEST_STOP, this.buttonState)
         EventManager.off(NameEvent.PRIZES_PAY, this.wonLabel)
     }
-
+    public getBetState(){
+        return this.betId;
+    }
     private updateLabel(){
         this.label.idleText();
     }
@@ -72,7 +74,7 @@ export class GameManager extends Component {
             this.scheduleOnce(() => {
                 this.slotController.stateSpinButton(true);
                 this.updateLabel();
-            }, 0.2);
+            }, 0.4);
 
         }
 

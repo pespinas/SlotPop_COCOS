@@ -1,4 +1,4 @@
-import {userBet, userDefault} from "../Domain/GameConfig"
+import {userBet, userDefault} from "../Domain/indexD"
 
 export class Balance {
     private currentBalance: number = userDefault.INITIAL_BALANCE;

@@ -1,7 +1,7 @@
 import {_decorator, Component, instantiate, Node, Prefab,Button} from 'cc';
 import {NameEvent} from '../Infrastructure/NameEvent';
 import {EventManager} from '../Infrastructure/EventManager';
-import {SymbolRNG} from '../Domain/SymbolRNG';
+import {SymbolRNG} from '../Domain/indexD';
 import {SymbolController} from './SymbolController';
 import {ReelsController} from './ReelsController';
 import {PresentConfig} from "./PresentConfig";

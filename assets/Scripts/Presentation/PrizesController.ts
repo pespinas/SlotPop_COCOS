@@ -2,8 +2,10 @@
 import { _decorator, Component, Node} from 'cc';
 import {EventManager} from "../Infrastructure/EventManager";
 import {NameEvent} from "../Infrastructure/NameEvent";
-import { PrizeChecker } from "../Domain/PrizeChecker";
-import {PrizeCalculator} from "db://assets/Scripts/Application/PrizeCalculator";
+import { PrizeChecker } from "../Domain/indexD";
+import {PrizeCalculator} from "../Application/PrizeCalculator";
+import {GameManager} from "../Presentation/GameManager";
+
 const { ccclass, property } = _decorator;
  
 @ccclass('PrizesController')
@@ -37,7 +39,8 @@ export class PrizesController extends Component{
             for (let j = 0; j < result.symbols[i].length; j++) {
                 this.symbolName = result.symbols[i];
             }
-            const prizeResult = PrizeCalculator.calculateWin(this.symbolName, result.coord[i].length);
+            const bet = GameManager.Instance.getBetState();
+            const prizeResult = PrizeCalculator.calculateWin(this.symbolName, result.coord[i].length, bet);
             this.totalWin += prizeResult;
         }
         EventManager.emit(NameEvent.PRIZES_PAY, this.totalWin);
