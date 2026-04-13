@@ -7,14 +7,12 @@ export class AdaptiveUIController extends Component {
     @property(Camera)
     public gameCamera: Camera;
 
-    @property
-    public maxZoom: number = 1.5;
-
-    @property
-    public minZoom: number = 0.8;
+    @property(Node)
+    public contentToZoom: Node; // El nodo raíz del contenido
 
     protected onLoad() {
         view.on('canvas-resize', this.adjustCamera, this);
+        window.addEventListener('resize', this.adjustCamera.bind(this));
         this.adjustCamera();
     }
 
@@ -25,18 +23,27 @@ export class AdaptiveUIController extends Component {
     private adjustCamera() {
         if (!this.gameCamera) return;
 
-        const windowSize = screen.windowSize;
-        const viewportAspect = windowSize.width / windowSize.height;
-
+        const canvasSize = ccView.getCanvasSize();
         const designSize = ccView.getDesignResolutionSize();
+        
+        const deviceAspect = canvasSize.width / canvasSize.height;
         const designAspect = designSize.width / designSize.height;
 
-        let orthoHeight = designSize.height / 2;
+        let cameraHeight = designSize.height / 2;
+        let contentScale = 1;
 
-        if (viewportAspect > designAspect) {
-            orthoHeight = (designSize.width / viewportAspect) / 2;
+        if (deviceAspect > designAspect) {
+            cameraHeight = designSize.height / 2;
+            contentScale = deviceAspect / designAspect;
+        } else if (deviceAspect < designAspect) {
+            cameraHeight = (designSize.width / deviceAspect) / 2;
+            contentScale = designAspect / deviceAspect;
         }
 
-        this.gameCamera.orthoHeight = orthoHeight;
+        this.gameCamera.orthoHeight = cameraHeight;
+
+        if (this.contentToZoom) {
+            this.contentToZoom.setScale(v3(contentScale, contentScale, 1));
+        }
     }
 }
