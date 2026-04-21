@@ -14,12 +14,15 @@ export class PrizesController extends Component{
     private prizeChecker:PrizeChecker = new PrizeChecker();
     private symbolName:string = "";
     private totalWin:number = 0;
+    private bet:number = 1;
 
     protected onLoad(){
         EventManager.on(NameEvent.CHECK_PRIZES,this.checkWin,this);
+        EventManager.on(NameEvent.GET_BET,this.setBet,this);
     }
     protected onDestroy(){
         EventManager.off(NameEvent.CHECK_PRIZES,this.checkWin,this);
+        EventManager.off(NameEvent.GET_BET,this.setBet,this);
     }
     private checkWin(symbols: string[][]) {
         const result = this.prizeChecker.checkSymbols(symbols);
@@ -33,14 +36,16 @@ export class PrizesController extends Component{
             this.totalWin = 0;
         }
     }
+    setBet(bet:number){
+        this.bet = bet;
+    }
 
     private prizeSymbol(result){
         for (let i = 0; i < result.coord.length; i++) {
             for (let j = 0; j < result.symbols[i].length; j++) {
                 this.symbolName = result.symbols[i];
             }
-            const bet = GameManager.Instance.getBetState();
-            const prizeResult = PrizeCalculator.calculateWin(this.symbolName, result.coord[i].length, bet);
+            const prizeResult = PrizeCalculator.calculateWin(this.symbolName, result.coord[i].length, this.bet);
             this.totalWin += prizeResult;
         }
         EventManager.emit(NameEvent.PRIZES_PAY, this.totalWin);

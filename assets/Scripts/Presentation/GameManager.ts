@@ -16,7 +16,6 @@ export class GameManager extends Component {
     public label: LabelController;
     @property(SlotController)
     public slotController: SlotController;
-    public static Instance: GameManager;
 
     private betId: number;
     private bet: number;
@@ -28,7 +27,6 @@ export class GameManager extends Component {
         EventManager.on(NameEvent.PRIZES_PAY, this.wonLabel, this)
 
         LocalizationService.init(this.labelText.json);
-        GameManager.Instance = this;
         this.betId = this.balance.getBetId();
         this.bet = this.balance.getBet(this.betId);
 
@@ -68,6 +66,7 @@ export class GameManager extends Component {
     private buttonState(state: boolean){
         if(state){
             EventManager.emit(NameEvent.ON_SPIN, true);
+            EventManager.emit(NameEvent.GET_BET, this.betId);
             this.updateBalanceOnSpin();
         }
         else{
