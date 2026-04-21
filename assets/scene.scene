@@ -88,7 +88,7 @@
     "_priority": 0,
     "_fov": 54.853,
     "_fovAxis": 0,
-    "_orthoHeight": 668.4444444444445,
+    "_orthoHeight": 664.1259320629661,
     "_near": 1,
     "_far": 1000,
     "_color": {
@@ -1529,10 +1529,10 @@
       "b": 0,
       "a": 255
     },
-    "_string": "5",
+    "_string": "50",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 50,
+    "_actualFontSize": 45,
     "_fontSize": 100,
     "_fontFamily": "",
     "_lineHeight": 100,
