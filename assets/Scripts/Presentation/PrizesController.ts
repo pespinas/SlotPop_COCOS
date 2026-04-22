@@ -18,11 +18,9 @@ export class PrizesController extends Component{
 
     protected onLoad(){
         EventManager.on(NameEvent.CHECK_PRIZES,this.checkWin,this);
-        EventManager.on(NameEvent.GET_BET,this.setBet,this);
     }
     protected onDestroy(){
         EventManager.off(NameEvent.CHECK_PRIZES,this.checkWin,this);
-        EventManager.off(NameEvent.GET_BET,this.setBet,this);
     }
     private checkWin(symbols: string[][]) {
         const result = this.prizeChecker.checkSymbols(symbols);
@@ -36,8 +34,9 @@ export class PrizesController extends Component{
             this.totalWin = 0;
         }
     }
-    setBet(bet:number){
+    public setBet(bet:number){
         this.bet = bet;
+        console.log(this.bet)
     }
 
     private prizeSymbol(result){

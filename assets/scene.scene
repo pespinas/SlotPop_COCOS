@@ -88,7 +88,7 @@
     "_priority": 0,
     "_fov": 54.853,
     "_fovAxis": 0,
-    "_orthoHeight": 664.1259320629661,
+    "_orthoHeight": 979.8840099420049,
     "_near": 1,
     "_far": 1000,
     "_color": {
@@ -1788,6 +1788,9 @@
         "__expectedType__": "cc.SpriteFrame"
       }
     ],
+    "pokeballButton": {
+      "__id__": 45
+    },
     "_id": "aavSzOs6NLEYV8qRAbqVr9"
   },
   {
@@ -1844,6 +1847,9 @@
     },
     "slotController": {
       "__id__": 16
+    },
+    "prizesController": {
+      "__id__": 20
     },
     "_id": "fc+stOYjxGQrYnOlLiMDLr"
   },

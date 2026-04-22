@@ -5,6 +5,7 @@ import {SlotController} from "../Presentation/SlotController";
 import {LabelController} from "../Presentation/LabelController";
 import {LocalizationService} from '../Application/LocalizationService';
 import {Balance} from "../Domain/indexD";
+import {PrizesController} from "db://assets/Scripts/Presentation/PrizesController";
 
 const { ccclass, property } = _decorator;
  
@@ -16,6 +17,9 @@ export class GameManager extends Component {
     public label: LabelController;
     @property(SlotController)
     public slotController: SlotController;
+    @property(PrizesController)
+    public prizesController: PrizesController;
+
 
     private betId: number;
     private bet: number;
@@ -65,13 +69,15 @@ export class GameManager extends Component {
     }
     private buttonState(state: boolean){
         if(state){
-            EventManager.emit(NameEvent.ON_SPIN, true);
-            EventManager.emit(NameEvent.GET_BET, this.betId);
+            this.slotController.startSpin();
+            this.prizesController.setBet(this.betId);
+            this.label.stateBetButton(false);
             this.updateBalanceOnSpin();
         }
         else{
             this.scheduleOnce(() => {
                 this.slotController.stateSpinButton(true);
+                this.label.stateBetButton(true);
                 this.updateLabel();
             }, 0.4);
 

@@ -62,6 +62,11 @@ export class SlotController extends Component {
     public stateSpinButton(state:boolean) {
         this.spinButton.interactable = state;
     }
+    public startSpin(){
+        this.reelControllers.forEach(reel => {
+            reel.reelStartMovement();
+        })
+    }
     private onPrizesFound(allPrizes: {x: number, y: number}[][]){
         const rowsSymbols: number[][]= this.reelControllers.map(() =>[]);
         for (let i = 0; i < allPrizes.length; i++) {

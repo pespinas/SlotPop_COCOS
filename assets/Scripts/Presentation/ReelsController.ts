@@ -40,7 +40,7 @@ export class ReelsController extends Component {
         EventManager.off(NameEvent.ON_SPIN, this.reelStartMovement, this);
     }
 
-    private reelStartMovement(){
+    public reelStartMovement(){
         this._symbolCtrl.sort((a, b) => a.node.position.y - b.node.position.y);
         this._symbolCtrl.forEach((symbol,index) => {
             const ctrl = this._symbolCtrl[index];

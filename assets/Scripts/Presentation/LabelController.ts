@@ -1,5 +1,5 @@
 
-import { _decorator, Component, SpriteFrame,Label,Sprite } from 'cc';
+import { _decorator, Component, SpriteFrame,Label,Sprite,Button } from 'cc';
 import {LocalizationService} from "../Application/LocalizationService";
 const { ccclass, property } = _decorator;
  
@@ -15,6 +15,8 @@ export class LabelController extends Component {
     public betImage: Sprite = null!;
     @property({ type: [SpriteFrame] })
     public betImages: SpriteFrame[] = [];
+    @property({ type: [Button] })
+    pokeballButton: Button;
 
 
     public idleText(){
@@ -31,5 +33,7 @@ export class LabelController extends Component {
         this.betImage.spriteFrame = this.betImages[betId - 1];
         this.labelBet.string = betValue.toString();
     }
-
+    public stateBetButton(state:boolean){
+        this.pokeballButton.interactable = state;
+    }
 }
