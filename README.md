@@ -53,3 +53,9 @@ assets/
     ├── Infrastructure/# Event Manager y Tipos de Eventos
     └── Presentation/  # Controladores de Sprites y Animaciones (Tweens)
 ```
+## 🚀 Live Demo
+
+Puedes probar el prototipo funcional directamente en tu navegador a través de **itch.io**:
+
+🔗 **Enlace:** [https://pespinas.itch.io/pokeslot](https://pespinas.itch.io/pokeslot)  
+🔑 **Contraseña de acceso:** `lelepancha`
