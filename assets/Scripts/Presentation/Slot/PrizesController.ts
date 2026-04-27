@@ -1,10 +1,9 @@
 
 import { _decorator, Component, Node} from 'cc';
-import {EventManager} from "../Infrastructure/EventManager";
-import {NameEvent} from "../Infrastructure/NameEvent";
-import { PrizeChecker } from "../Domain/indexD";
-import {PrizeCalculator} from "../Application/PrizeCalculator";
-import {GameManager} from "../Presentation/GameManager";
+import {EventManager} from "db://assets/Scripts/Infrastructure/Slot/EventManager";
+import {NameEvent} from "db://assets/Scripts/Infrastructure/Slot/NameEvent";
+import { PrizeChecker } from "db://assets/Scripts/Domain/Slot/PrizeChecker";
+import {PrizeCalculator} from "db://assets/Scripts/Application/Slot/PrizeCalculator";
 
 const { ccclass, property } = _decorator;
  

@@ -1,4 +1,4 @@
-import {SymbolConfig} from "../Domain/indexD";
+import {SymbolConfig} from "db://assets/Scripts/Domain/Slot/GameConfig";
 
 
 export class PrizeCalculator{

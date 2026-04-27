@@ -1,10 +1,10 @@
 import {_decorator, Component, instantiate, Node, Prefab,Button} from 'cc';
-import {NameEvent} from '../Infrastructure/NameEvent';
-import {EventManager} from '../Infrastructure/EventManager';
-import {SymbolRNG} from '../Domain/indexD';
-import {SymbolController} from './SymbolController';
-import {ReelsController} from './ReelsController';
-import {PresentConfig} from "./PresentConfig";
+import {NameEvent} from 'db://assets/Scripts/Infrastructure/Slot/NameEvent';
+import {EventManager} from 'db://assets/Scripts/Infrastructure/Slot/EventManager';
+import {SymbolRNG} from 'db://assets/Scripts/Domain/Slot/SymbolRNG';
+import {SymbolController} from 'db://assets/Scripts/Presentation/Slot/SymbolController';
+import {ReelsController} from 'db://assets/Scripts/Presentation/Slot/ReelsController';
+import {PresentConfig} from "db://assets/Scripts/Presentation/Slot/PresentConfig";
 
 const { ccclass, property } = _decorator;
 

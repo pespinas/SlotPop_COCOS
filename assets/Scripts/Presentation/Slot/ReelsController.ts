@@ -1,7 +1,7 @@
 import {_decorator, Component, Node, tween, Vec3} from 'cc';
-import {EventManager} from '../Infrastructure/EventManager';
-import {NameEvent} from '../Infrastructure/NameEvent';
-import {SymbolController} from "./SymbolController";
+import {EventManager} from 'db://assets/Scripts/Infrastructure/Slot/EventManager';
+import {NameEvent} from 'db://assets/Scripts/Infrastructure/Slot/NameEvent';
+import {SymbolController} from "db://assets/Scripts/Presentation/Slot/SymbolController";
 
 const { ccclass, property } = _decorator;
 

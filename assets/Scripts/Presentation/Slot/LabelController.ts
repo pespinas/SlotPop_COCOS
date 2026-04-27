@@ -1,6 +1,6 @@
 
 import { _decorator, Component, SpriteFrame,Label,Sprite,Button } from 'cc';
-import {LocalizationService} from "../Application/LocalizationService";
+import {LocalizationService} from "db://assets/Scripts/Application/Slot/LocalizationService";
 const { ccclass, property } = _decorator;
  
 @ccclass('LabelController')

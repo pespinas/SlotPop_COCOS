@@ -1,4 +1,4 @@
-import {SymbolConfig} from "../Domain/indexD";
+import {SymbolConfig} from "db://assets/Scripts/Domain/Slot/GameConfig";
 
 export class SymbolRNG{
     private probabilitiesSymbol:number[] = [30, 25, 20, 20, 10, 5, 1];

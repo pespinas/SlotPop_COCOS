@@ -1,11 +1,11 @@
 import {_decorator, Component, JsonAsset} from 'cc';
-import {EventManager} from "../Infrastructure/EventManager";
-import {NameEvent} from "../Infrastructure/NameEvent";
-import {SlotController} from "../Presentation/SlotController";
-import {LabelController} from "../Presentation/LabelController";
-import {LocalizationService} from '../Application/LocalizationService';
-import {Balance} from "../Domain/indexD";
-import {PrizesController} from "db://assets/Scripts/Presentation/PrizesController";
+import {EventManager} from "db://assets/Scripts/Infrastructure/Slot/EventManager";
+import {NameEvent} from "db://assets/Scripts/Infrastructure/Slot/NameEvent";
+import {SlotController} from "db://assets/Scripts/Presentation/Slot/SlotController";
+import {LabelController} from "db://assets/Scripts/Presentation/Slot/LabelController";
+import { LocalizationService } from "db://assets/Scripts/Application/Slot/LocalizationService";
+import {Balance} from "db://assets/Scripts/Domain/Slot/Balance";
+import {PrizesController} from "db://assets/Scripts/Presentation/Slot/PrizesController";
 
 const { ccclass, property } = _decorator;
  

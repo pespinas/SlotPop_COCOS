@@ -1,4 +1,4 @@
-import {userBet, userDefault} from "../Domain/indexD"
+import {userBet, userDefault} from "db://assets/Scripts/Domain/Slot/GameConfig";
 
 export class Balance {
     private currentBalance: number = userDefault.INITIAL_BALANCE;
