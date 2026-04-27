@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "ground",
+    "_name": "WallPrefab",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -25,10 +25,13 @@
       },
       {
         "__id__": 4
+      },
+      {
+        "__id__": 6
       }
     ],
     "_prefab": {
-      "__id__": 6
+      "__id__": 8
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -132,6 +135,23 @@
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "67jLybeIRGjJ15DzYrVqxB"
+  },
+  {
+    "__type__": "2147dDmAXBL8bcfxJzPcrWl",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 7
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "7csQWnby9Ml4hfBG8fEM23"
   },
   {
     "__type__": "cc.PrefabInfo",

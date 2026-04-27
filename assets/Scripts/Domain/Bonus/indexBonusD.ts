@@ -1,0 +1,1 @@
+export {WallData} from "db://assets/Scripts/Domain/Bonus/WallData";
