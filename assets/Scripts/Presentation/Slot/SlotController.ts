@@ -1,6 +1,6 @@
 import {_decorator, Component, instantiate, Node, Prefab,Button} from 'cc';
-import {NameEvent} from 'db://assets/Scripts/Infrastructure/Slot/NameEvent';
-import {EventManager} from 'db://assets/Scripts/Infrastructure/Slot/EventManager';
+import {NameEvent} from 'db://assets/Scripts/Infrastructure/NameEvent';
+import {EventManager} from 'db://assets/Scripts/Infrastructure/EventManager';
 import {SymbolRNG} from 'db://assets/Scripts/Domain/Slot/SymbolRNG';
 import {SymbolController} from 'db://assets/Scripts/Presentation/Slot/SymbolController';
 import {ReelsController} from 'db://assets/Scripts/Presentation/Slot/ReelsController';

@@ -1,6 +1,6 @@
 import {_decorator, Component, JsonAsset} from 'cc';
-import {EventManager} from "db://assets/Scripts/Infrastructure/Slot/EventManager";
-import {NameEvent} from "db://assets/Scripts/Infrastructure/Slot/NameEvent";
+import {EventManager} from "db://assets/Scripts/Infrastructure/EventManager";
+import {NameEvent} from "db://assets/Scripts/Infrastructure/NameEvent";
 import {SlotController} from "db://assets/Scripts/Presentation/Slot/SlotController";
 import {LabelController} from "db://assets/Scripts/Presentation/Slot/LabelController";
 import { LocalizationService } from "db://assets/Scripts/Application/Slot/LocalizationService";

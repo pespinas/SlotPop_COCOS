@@ -1,7 +1,7 @@
 
 import { _decorator, Component, Node} from 'cc';
-import {EventManager} from "db://assets/Scripts/Infrastructure/Slot/EventManager";
-import {NameEvent} from "db://assets/Scripts/Infrastructure/Slot/NameEvent";
+import {EventManager} from "db://assets/Scripts/Infrastructure/EventManager";
+import {NameEvent} from "db://assets/Scripts/Infrastructure/NameEvent";
 import { PrizeChecker } from "db://assets/Scripts/Domain/Slot/PrizeChecker";
 import {PrizeCalculator} from "db://assets/Scripts/Application/Slot/PrizeCalculator";
 
