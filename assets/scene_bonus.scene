@@ -88,7 +88,7 @@
     "_priority": 0,
     "_fov": 54.853,
     "_fovAxis": 0,
-    "_orthoHeight": 671.356783919598,
+    "_orthoHeight": 675.6738768718801,
     "_near": 1,
     "_far": 1000,
     "_color": {
@@ -395,7 +395,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 0
+      "z": 1
     },
     "_lrot": {
       "__type__": "cc.Quat",
