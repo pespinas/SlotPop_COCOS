@@ -18,3 +18,27 @@ export enum Hardness {
     LV1_ROCK = 5,
     LV3_ROCK = 7,
 }
+
+export interface GemStructure {
+    id: string;
+    tiles: number[];
+    points: number;
+}
+
+export const GEMS: Record<string, GemStructure> = {
+    RED: {
+        id: "RED_GEM",
+        tiles: [1, 2, 7, 8],
+        points: 100
+    },
+    GREEN: {
+        id: "GREEN_GEM",
+        tiles: [3, 4, 9, 10],
+        points: 200
+    },
+    BLUE: {
+        id: "BLUE_GEM",
+        tiles: [5, 6, 11, 12],
+        points: 500
+    }
+};
