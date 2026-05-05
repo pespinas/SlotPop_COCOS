@@ -7,5 +7,6 @@ export enum NameEvent{
     CHECK_PRIZES = 'CHECK_PRIZES',
     PRIZES_FOUND = 'PRIZES_FOUND',
     PRIZES_PAY =  'SHOW_PAY_LABEl',
-    GET_BET = 'GET_BET'
+    GET_BET = 'GET_BET',
+    TOUCH_START = 'TOUCH_START'
 }
