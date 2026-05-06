@@ -8,20 +8,18 @@ export class TouchController extends Component {
 
     @property(Camera)
     public mainCamera: Camera = null;
-
     @property(TiledMap)
     public map: TiledMap = null;
+    private layerMap: TiledLayer = null;
 
-    @property(TiledLayer)
-    public layerMap: TiledLayer = null;
-    private _uiTransform: UITransform = null;
-    private _offsetX: number = 0;
-    private _offsetY: number = 0;
-    private _visualTileWidth: number = 0;
-    private _visualTileHeight: number = 0;
-    private _mapSize: { width: number, height: number } = { width: 0, height: 0 };
+    private uiTransform: UITransform = null;
+    private offsetX: number = 0;
+    private offsetY: number = 0;
+    private visualTileWidth: number = 0;
+    private mapSize: { width: number, height: number } = { width: 0, height: 0 };
 
     start() {
+        this.layerMap= this.map.getLayer("wall");
         EventManager.on(NameEvent.TOUCH_START, this.onTouchStart, this)
         this.node.on('touch-start', this.onTouchStart, this);
         this.getTouchReady();
@@ -32,35 +30,30 @@ export class TouchController extends Component {
         const worldPos = new Vec3();
         this.mainCamera.screenToWorld(new Vec3(touchPos.x, touchPos.y, 0), worldPos);
 
-        const localPos = this._uiTransform.convertToNodeSpaceAR(worldPos);
+        const localPos = this.uiTransform.convertToNodeSpaceAR(worldPos);
 
-        let xRelative = localPos.x + this._offsetX;
-        let yRelative = localPos.y + this._offsetY;
-        let tileX = Math.floor(xRelative  /  this._visualTileWidth);
-        let tileY = Math.floor(yRelative / this._visualTileHeight);
-        console.log(tileX,tileY)
-        console.log(this._mapSize.width)
-        if (tileX > 0 && tileX < this._mapSize.width-1 && tileY >= 0 && tileY < this._mapSize.height) {
+        let xRelative = localPos.x + this.offsetX;
+        let yRelative = this.offsetY - localPos.y;
+        let tileX = Math.floor(xRelative  /  this.visualTileWidth);
+        let tileY = Math.floor(yRelative / (this.map.getTileSize().height));
+        if (tileX > 0 && tileX < this.mapSize.width-1 && tileY >= 0 && tileY < this.mapSize.height) {
             this.onTileClicked(tileX, tileY);
         }
     }
 
     private onTileClicked(x: number, y: number) {
-        const gid = this.layerMap.getTileGIDAt(x, y);
-        //console.log("xxxxx",gid);
+        const coord: {x: number, y: number} = { x, y };
+        EventManager.emit(NameEvent.TILED_TOUCHED, coord);
     }
 
     private getTouchReady(){
-        this._uiTransform = this.map.node.getComponent(UITransform);
-        const scale = this.map.node.scale;
-        const tileSize = this.map.getTileSize();
+        this.uiTransform = this.map.node.getComponent(UITransform);
         const mSize = this.map.getMapSize();
 
-        this._offsetX = this._uiTransform.width / 2;
-        this._offsetY = this._uiTransform.height / 2;
-        this._visualTileWidth = this.map.getTileSize().width;
-        this._visualTileHeight = this.map.getTileSize().height;
-        this._mapSize = { width: mSize.width, height: mSize.height };
+        this.offsetX = this.uiTransform.width / 2;
+        this.offsetY = this.uiTransform.height / 2;
+        this.visualTileWidth = this.map.getTileSize().width;
+        this.mapSize = { width: mSize.width, height: mSize.height };
     }
 
 }
