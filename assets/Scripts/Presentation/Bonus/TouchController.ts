@@ -10,16 +10,15 @@ export class TouchController extends Component {
     public mainCamera: Camera = null;
     @property(TiledMap)
     public map: TiledMap = null;
-    private layerMap: TiledLayer = null;
 
     private uiTransform: UITransform = null;
     private offsetX: number = 0;
     private offsetY: number = 0;
     private visualTileWidth: number = 0;
     private mapSize: { width: number, height: number } = { width: 0, height: 0 };
+    private isHammer: boolean = true;
 
     start() {
-        this.layerMap= this.map.getLayer("wall");
         EventManager.on(NameEvent.TOUCH_START, this.onTouchStart, this)
         this.node.on('touch-start', this.onTouchStart, this);
         this.getTouchReady();
@@ -42,8 +41,24 @@ export class TouchController extends Component {
     }
 
     private onTileClicked(x: number, y: number) {
-        const coord: {x: number, y: number} = { x, y };
-        EventManager.emit(NameEvent.TILED_TOUCHED, coord);
+        if(this.isHammer){
+            const positions = [
+                { dx: 0, dy: 0 },
+                { dx: 0, dy: -1 },
+                { dx: 0, dy: 1 },
+                { dx: -1, dy: 0 },
+                { dx: 1, dy: 0 }
+            ];
+            positions.forEach(pos => {
+                const coord: {x: number, y: number} = { x: x + pos.dx, y: y + pos.dy };
+                EventManager.emit(NameEvent.TILED_TOUCHED, coord);
+            });
+        }
+        else{
+            const coord: {x: number, y: number} = { x, y };
+            console.log(coord)
+            EventManager.emit(NameEvent.TILED_TOUCHED, coord);
+        }
     }
 
     private getTouchReady(){
