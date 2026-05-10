@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.12.1" name="wall" tilewidth="16" tileheight="16" spacing="1" margin="1" tilecount="8" columns="4">
+<tileset version="1.10" tiledversion="1.12.1" name="wall" class="wall" tilewidth="16" tileheight="16" spacing="1" margin="1" tilecount="8" columns="4" objectalignment="center">
  <image source="wall.png" width="69" height="35"/>
- <tile id="0">
+ <tile id="0" type="wall">
   <properties>
    <property name="hardness" type="int" value="1"/>
    <property name="type" value="FLOOR"/>
   </properties>
  </tile>
- <tile id="1">
+ <tile id="1" type="wall">
   <properties>
    <property name="hardness" type="int" value="2"/>
    <property name="type" value="SCAR_GROUND"/>
   </properties>
  </tile>
- <tile id="2">
+ <tile id="2" type="wall">
   <properties>
    <property name="hardness" type="int" value="4"/>
    <property name="type" value="SCAR_ROCK"/>
   </properties>
  </tile>
- <tile id="3">
+ <tile id="3" type="wall">
   <properties>
    <property name="hardness" type="int" value="6"/>
    <property name="type" value="LV2_ROCK"/>
@@ -31,19 +31,19 @@
    <property name="type" value="NOTHING"/>
   </properties>
  </tile>
- <tile id="5">
+ <tile id="5" type="wall">
   <properties>
    <property name="hardness" type="int" value="3"/>
    <property name="type" value="GROUND"/>
   </properties>
  </tile>
- <tile id="6">
+ <tile id="6" type="wall">
   <properties>
    <property name="hardness" type="int" value="5"/>
    <property name="type" value="LV1_ROCK"/>
   </properties>
  </tile>
- <tile id="7">
+ <tile id="7" type="wall">
   <properties>
    <property name="hardness" type="int" value="7"/>
    <property name="type" value="LV3_ROCK"/>

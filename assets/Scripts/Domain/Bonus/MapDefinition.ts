@@ -26,19 +26,19 @@ export interface GemStructure {
 }
 
 export const GEMS: Record<string, GemStructure> = {
-    RED: {
-        id: "RED_GEM",
-        tiles: [1, 2, 7, 8],
-        points: 100
-    },
     GREEN: {
         id: "GREEN_GEM",
-        tiles: [3, 4, 9, 10],
+        tiles: [9, 10, 15, 16],
+        points: 100
+    },
+    RED: {
+        id: "RED_GEM",
+        tiles: [11, 12, 17, 18],
         points: 200
     },
     BLUE: {
         id: "BLUE_GEM",
-        tiles: [5, 6, 11, 12],
+        tiles: [13, 14, 19, 20],
         points: 500
     }
 };

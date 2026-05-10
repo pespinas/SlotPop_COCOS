@@ -22,18 +22,19 @@ export class PatternManager extends Component {
     }
 
     private onTileClicked(coord: {x: number, y: number}){
-
+        if(coord.x <= 0 || coord.y <= -1 || coord.x >= 20 || coord.y >= 20 ){
+            return false;
+        }
         const gid = this.layerWall.getTileGIDAt(coord.x, coord.y);
         const props = this.map.getPropertiesForGID(gid);
         let currentHardness: number = Number(props.hardness);
         let newHardnessV = currentHardness - 1;
-        if(newHardnessV < 1){
+        if(newHardnessV <= 1){
             this.layerWall.setTileGIDAt(TileType.NOTHING, coord.x, coord.y);
+            this.layerWall.markForUpdateRenderData();
         }
         else{
             let newSprite = Hardness[newHardnessV];
-            console.log(newSprite)
-            console.log(TileType[newSprite])
             this.layerWall.setTileGIDAt(TileType[newSprite], coord.x, coord.y);
             this.layerWall.markForUpdateRenderData();
         }
