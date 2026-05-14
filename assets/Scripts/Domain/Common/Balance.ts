@@ -1,9 +1,19 @@
 import {userBet, userDefault} from "db://assets/Scripts/Domain/Slot/GameConfig";
 
 export class Balance {
+    private static _instance: Balance;
     private currentBalance: number = userDefault.INITIAL_BALANCE;
     private currentBetId:number = 1;
     private currentBet:number = userBet.BET1;
+
+    private constructor() {}
+
+    public static getInstance(): Balance {
+        if (!this._instance) {
+            this._instance = new Balance();
+        }
+        return this._instance;
+    }
 
     public getBalance(): number {
         return this.currentBalance;
@@ -30,6 +40,5 @@ export class Balance {
             return true;
         }
         return false;
-
     }
 }
