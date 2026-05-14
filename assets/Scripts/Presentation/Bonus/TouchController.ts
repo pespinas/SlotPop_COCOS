@@ -18,12 +18,12 @@ export class TouchController extends Component {
     private mapSize: { width: number, height: number } = { width: 0, height: 0 };
     private isHammer: boolean = false;
 
-    start() {
+    protected start() {
         EventManager.on(NameEvent.TOUCH_START, this.onTouchStart, this)
         this.node.on('touch-start', this.onTouchStart, this);
         this.getTouchReady();
     }
-    onDestroy() {
+    protected onDestroy() {
         EventManager.off(NameEvent.TOUCH_START, this.onTouchStart, this)
     }
     private changeTool(event: Event, datatoolState: string){
@@ -64,6 +64,7 @@ export class TouchController extends Component {
             const coord: {x: number, y: number} = { x, y };
             EventManager.emit(NameEvent.TILED_TOUCHED, coord);
         }
+        EventManager.emit(NameEvent.TOOL_USED, this.isHammer);
     }
 
     private getTouchReady(){

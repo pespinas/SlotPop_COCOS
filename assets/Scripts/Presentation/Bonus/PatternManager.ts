@@ -11,13 +11,14 @@ export class PatternManager extends Component {
     @property(TiledMap)
     public map: TiledMap = null;
     private layerWall: TiledLayer = null;
-    start(){
+
+    protected start(){
         this.layerWall= this.map.getLayer("wall");
     }
-    onLoad(){
+    protected onLoad(){
         EventManager.on(NameEvent.TILED_TOUCHED, this.onTileClicked, this);
     }
-    onDestroy(){
+    protected onDestroy(){
         EventManager.off(NameEvent.TILED_TOUCHED, this.onTileClicked, this);
     }
 

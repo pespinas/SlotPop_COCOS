@@ -15,7 +15,7 @@ export class WallManager extends Component {
     private gemsName: string[] = ["GREEN","RED","BLUE"];
 
 
-    start() {
+    protected start() {
         this.fillMap();
     }
     private fillMap() {
