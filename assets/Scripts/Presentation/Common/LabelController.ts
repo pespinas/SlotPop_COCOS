@@ -1,6 +1,6 @@
 
 import { _decorator, Component, SpriteFrame,Label,Sprite,Button } from 'cc';
-import {LocalizationService} from "db://assets/Scripts/Application/Slot/LocalizationService";
+import {LocalizationService} from "db://assets/Scripts/Application/Common/LocalizationService";
 const { ccclass, property } = _decorator;
  
 @ccclass('LabelController')
@@ -18,16 +18,15 @@ export class LabelController extends Component {
     @property({ type: [Button] })
     pokeballButton: Button;
 
-
     public idleText(){
-        this.labelTop.string = LocalizationService.getIU('LBL_IDLE');
+        this.labelTop.string = LocalizationService.getUIGame('LBL_IDLE');
     }
 
     public wonText(won:number){
-        this.labelTop.string = LocalizationService.getIU('LBL_WIN') + " " + won + "";
+        this.labelTop.string = LocalizationService.getUIGame('LBL_WIN') + " " + won + "";
     }
     public totalWinText(won:number){
-        this.labelBottom.string = LocalizationService.getIU('BALANCE') + " " + won + "";
+        this.labelBottom.string = LocalizationService.getUIGame('BALANCE') + " " + won + "";
     }
     public changeBet(betId:number, betValue:number){
         this.betImage.spriteFrame = this.betImages[betId - 1];
@@ -35,5 +34,8 @@ export class LabelController extends Component {
     }
     public stateBetButton(state:boolean){
         this.pokeballButton.interactable = state;
+    }
+    public bonusHitLeft(hits:number){
+        this.labelTop.string = LocalizationService.getUIBonus('STAMINA_LEFT') + " " + hits + "";
     }
 }

@@ -7,7 +7,10 @@ export class LocalizationService {
         this._data = jsonContent;
     }
 
-    public static getIU(key: string): string {
+    public static getUIGame(key: string): string {
         return this._data["UI_GAME"][key];
+    }
+    public static getUIBonus(key: string): string {
+        return this._data["UI_BONUS"][key];
     }
 }
