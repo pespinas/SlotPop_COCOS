@@ -1,7 +1,7 @@
 import {SymbolConfig} from "db://assets/Scripts/Domain/Slot/GameConfig";
 
 export class SymbolRNG{
-    private probabilitiesSymbol:number[] = [30, 25, 20, 20, 10, 5, 1];
+    private probabilitiesSymbol:number[] = [25, 25, 20, 20, 10, 10, 5];
     private allSymbols = Object.keys(SymbolConfig.SYMBOL_DATA);
 
     public randomIndexSymbol(){
