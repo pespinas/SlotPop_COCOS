@@ -2,9 +2,9 @@ import {_decorator, Component, JsonAsset} from 'cc';
 import {EventManager} from "db://assets/Scripts/Infrastructure/EventManager";
 import {NameEvent} from "db://assets/Scripts/Infrastructure/NameEvent";
 import {SlotController} from "db://assets/Scripts/Presentation/Slot/SlotController";
-import {LabelController} from "db://assets/Scripts/Presentation/Slot/LabelController";
-import { LocalizationService } from "db://assets/Scripts/Application/Slot/LocalizationService";
-import {Balance} from "db://assets/Scripts/Domain/Slot/Balance";
+import {LabelController} from "db://assets/Scripts/Presentation/Common/LabelController";
+import { LocalizationService } from "db://assets/Scripts/Application/Common/LocalizationService";
+import {Balance} from "db://assets/Scripts/Domain/Common/Balance";
 import {PrizesController} from "db://assets/Scripts/Presentation/Slot/PrizesController";
 
 const { ccclass, property } = _decorator;
@@ -23,7 +23,6 @@ export class GameManager extends Component {
 
     private betId: number;
     private bet: number;
-    private balance: Balance = new Balance();
 
     protected onLoad(){
         EventManager.on(NameEvent.REQUEST_SPIN, this.buttonState, this)
@@ -31,8 +30,8 @@ export class GameManager extends Component {
         EventManager.on(NameEvent.PRIZES_PAY, this.wonLabel, this)
 
         LocalizationService.init(this.labelText.json);
-        this.betId = this.balance.getBetId();
-        this.bet = this.balance.getBet(this.betId);
+        this.betId = Balance.getInstance().getBetId();
+        this.bet = Balance.getInstance().getBet(this.betId);
 
         this.updateBalance(0);
         this.updateLabel();
@@ -53,18 +52,18 @@ export class GameManager extends Component {
         this.updateBalance(value);
     }
     private updateBalance(value:number){
-        this.balance.addMoney(value);
-        const total = this.balance.getBalance();
+        Balance.getInstance().addMoney(value);
+        const total = Balance.getInstance().getBalance();
         this.label.totalWinText(total);
     }
     private changeBet(){
-        this.balance.changeBet();
-        this.betId = this.balance.getBetId();
-        this.bet = this.balance.getBet(this.betId);
+        Balance.getInstance().changeBet();
+        this.betId = Balance.getInstance().getBetId();
+        this.bet = Balance.getInstance().getBet(this.betId);
         this.label.changeBet(this.betId, this.bet);
     }
     private updateBalanceOnSpin(){
-        this.balance.spendMoney(this.bet);
+        Balance.getInstance().spendMoney(this.bet);
         this.updateBalance(0);
     }
     private buttonState(state: boolean){
