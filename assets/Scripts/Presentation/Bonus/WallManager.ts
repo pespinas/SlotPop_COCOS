@@ -1,6 +1,6 @@
 import { _decorator, Component, Node, TiledMap,TiledLayer} from 'cc';
 import {NoiseGenerator} from  'db://assets/Scripts/Domain/Bonus/indexBonusD';
-import {TileType,GEMS} from  'db://assets/Scripts/Domain/Bonus/indexBonusD';
+import {TileType,GEMS,PrizesWallet,RewardGems} from  'db://assets/Scripts/Domain/Bonus/indexBonusD';
 const { ccclass, property } = _decorator;
 
 @ccclass('WallManager')
@@ -13,6 +13,12 @@ export class WallManager extends Component {
     private readonly HEIGHT = 20;
     private numPrizes = 7;
     private gemsName: string[] = ["GREEN","RED","BLUE"];
+    private positionGems = [
+        {dx: 0, dy: 0},
+        {dx: 1, dy: 0},
+        {dx: 0, dy: 1},
+        {dx: 1, dy: 1},
+    ];
 
 
     protected start() {
@@ -71,27 +77,27 @@ export class WallManager extends Component {
         const nameRandom = Math.floor(Math.random() * 3);
         const gemName = this.gemsName[nameRandom];
         const selectedGem = GEMS[gemName];
+        const stringPositions: string[] = [];
 
-        const positions = [
-            {dx: 0, dy: 0},
-            {dx: 1, dy: 0},
-            {dx: 0, dy: 1},
-            {dx: 1, dy: 1},
-        ];
-        positions.forEach((pos, index) => {
+        this.positionGems.forEach((pos, index) => {
             layerP.setTileGIDAt(selectedGem.tiles[index], startX + pos.dx, startY + pos.dy);
+            stringPositions.push(`${startX + pos.dx},${startY + pos.dy}`);
         });
+
+        const newPrize: RewardGems = {
+            id: `${gemName}_${Date.now()}_${Math.floor(Math.random() * 100)}`,
+            name: selectedGem.id,
+            prize: selectedGem.prize,
+            positions: stringPositions,
+            userPositions: []
+        };
+        PrizesWallet.getInstance().registerPrizes(newPrize);
     }
 
     private itsPrinted(x: number, y: number){
         const layerP: TiledLayer = this.mapTiled.getLayer("prizes");
-        const positions = [
-            {dx: 0, dy: 0},
-            {dx: 1, dy: 0},
-            {dx: 0, dy: 1},
-            {dx: 1, dy: 1},
-        ];
-        for (const pos of positions) {
+
+        for (const pos of this.positionGems) {
             const currentGid = layerP.getTileGIDAt(x + pos.dx, y + pos.dy);
             if (currentGid !== 0) {
                 return false;
@@ -99,4 +105,5 @@ export class WallManager extends Component {
         };
         return true;
     }
+
 }

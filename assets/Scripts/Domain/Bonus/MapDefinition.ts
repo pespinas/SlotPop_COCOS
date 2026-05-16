@@ -22,23 +22,23 @@ export enum Hardness {
 export interface GemStructure {
     id: string;
     tiles: number[];
-    points: number;
+    prize: number;
 }
 
 export const GEMS: Record<string, GemStructure> = {
     GREEN: {
         id: "GREEN_GEM",
         tiles: [9, 10, 15, 16],
-        points: 100
+        prize: 100
     },
     RED: {
         id: "RED_GEM",
         tiles: [11, 12, 17, 18],
-        points: 200
+        prize: 200
     },
     BLUE: {
         id: "BLUE_GEM",
         tiles: [13, 14, 19, 20],
-        points: 500
+        prize: 500
     }
 };

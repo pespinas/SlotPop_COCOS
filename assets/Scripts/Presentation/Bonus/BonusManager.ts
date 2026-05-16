@@ -5,7 +5,6 @@ import {EventManager} from "db://assets/Scripts/Infrastructure/EventManager";
 import {NameEvent} from "db://assets/Scripts/Infrastructure/NameEvent";
 import {Balance} from "db://assets/Scripts/Domain/Common/Balance";
 import {WallState} from "db://assets/Scripts/Domain/Bonus/indexBonusD";
-import {WallManager} from "db://assets/Scripts/Presentation/Bonus/WallManager";
 
 const { ccclass, property } = _decorator;
  
