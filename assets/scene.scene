@@ -88,7 +88,7 @@
     "_priority": 0,
     "_fov": 54.853,
     "_fovAxis": 0,
-    "_orthoHeight": 671.356783919598,
+    "_orthoHeight": 675.6738768718801,
     "_near": 1,
     "_far": 1000,
     "_color": {
@@ -1748,12 +1748,12 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "betImage": null,
-    "betImages": [],
+    "labelTop": null,
+    "labelBottom": null,
     "_id": "a7OoP0GwtErKMS8da/Yyxy"
   },
   {
-    "__type__": "11a5fnVNKFDerVrolzVRaDy",
+    "__type__": "4434br+pdJIxLKaqP/FwqBk",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -1790,7 +1790,7 @@
     "pokeballButton": {
       "__id__": 45
     },
-    "_id": "aavSzOs6NLEYV8qRAbqVr9"
+    "_id": "a7RMog9ypPfZHyVmNAsiEU"
   },
   {
     "__type__": "cc.UITransform",

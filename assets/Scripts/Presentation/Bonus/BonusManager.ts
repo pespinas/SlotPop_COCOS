@@ -1,5 +1,5 @@
 import { _decorator, Component, JsonAsset} from 'cc';
-import {LabelController} from "db://assets/Scripts/Presentation/Common/LabelController";
+import {BonusLabelController} from "db://assets/Scripts/Presentation/Bonus/BonusLabelController";
 import {LocalizationService} from "db://assets/Scripts/Application/Common/LocalizationService";
 import {EventManager} from "db://assets/Scripts/Infrastructure/EventManager";
 import {NameEvent} from "db://assets/Scripts/Infrastructure/NameEvent";
@@ -13,8 +13,8 @@ export class BonusMachine extends Component {
 
     @property(JsonAsset)
     public labelText: JsonAsset;
-    @property(LabelController)
-    public label: LabelController;
+    @property(BonusLabelController)
+    public label: BonusLabelController;
 
     protected onLoad(){
         LocalizationService.init(this.labelText.json);
@@ -33,6 +33,7 @@ export class BonusMachine extends Component {
        WallState.getInstance().registerHit(isHammer);
        let stamina = WallState.getInstance().getStamina();
        this.hitsLeft(stamina);
+
     }
 
     private hitsLeft(stamina: number){

@@ -2,7 +2,7 @@ import {_decorator, Component, JsonAsset} from 'cc';
 import {EventManager} from "db://assets/Scripts/Infrastructure/EventManager";
 import {NameEvent} from "db://assets/Scripts/Infrastructure/NameEvent";
 import {SlotController} from "db://assets/Scripts/Presentation/Slot/SlotController";
-import {LabelController} from "db://assets/Scripts/Presentation/Common/LabelController";
+import {SlotLabelController} from "db://assets/Scripts/Presentation/Slot/SlotLabelController";
 import { LocalizationService } from "db://assets/Scripts/Application/Common/LocalizationService";
 import {Balance} from "db://assets/Scripts/Domain/Common/Balance";
 import {PrizesController} from "db://assets/Scripts/Presentation/Slot/PrizesController";
@@ -13,8 +13,8 @@ const { ccclass, property } = _decorator;
 export class GameManager extends Component {
     @property(JsonAsset)
     public labelText: JsonAsset;
-    @property(LabelController)
-    public label: LabelController;
+    @property(SlotLabelController)
+    public label: SlotLabelController;
     @property(SlotController)
     public slotController: SlotController;
     @property(PrizesController)
