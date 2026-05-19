@@ -1748,10 +1748,10 @@
       "__id__": 46
     },
     "hammerButton": {
-      "__id__": 30
+      "__id__": 31
     },
     "pickaxeButton": {
-      "__id__": 25
+      "__id__": 26
     },
     "hammerImage": [
       {
@@ -1843,6 +1843,9 @@
     },
     "label": {
       "__id__": 51
+    },
+    "touch": {
+      "__id__": 18
     },
     "_id": "bauglutANDzIz1A9CZkwTm"
   },

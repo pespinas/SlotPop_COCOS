@@ -1,9 +1,9 @@
 import { _decorator, Component, Node } from 'cc';
 export class WallState{
     private static _instance: WallState;
-    private stamina: number = 100;
-    private hammerStamina:number = 5;
-    private pickaxeStamina:number = 2;
+    private stamina: number = 150;
+    private hammerStamina:number = 2;
+    private pickaxeStamina:number = 1;
 
     private constructor() {}
 
@@ -17,9 +17,14 @@ export class WallState{
     public getStamina(): number{
         return this.stamina;
     }
+
     private updateStamina(hit:number){
+        if((this.stamina - hit) < 0){
+            return null;
+        }
         this.stamina= this.stamina - hit;
     }
+
     public registerHit(ishammer: boolean){
         if(ishammer){
             this.updateStamina(this.hammerStamina);

@@ -17,18 +17,31 @@ export class TouchController extends Component {
     private visualTileWidth: number = 0;
     private mapSize: { width: number, height: number } = { width: 0, height: 0 };
     private isHammer: boolean = false;
+    private wallStamina: number;
 
     protected start() {
         EventManager.on(NameEvent.TOUCH_START, this.onTouchStart, this)
-        this.node.on('touch-start', this.onTouchStart, this);
+        this.node.on('touch-start', this.onTouchControll, this);
         this.getTouchReady();
     }
+
     protected onDestroy() {
-        EventManager.off(NameEvent.TOUCH_START, this.onTouchStart, this)
+        EventManager.off(NameEvent.TOUCH_START, this.onTouchControll, this)
     }
+
     private changeTool(event: Event, datatoolState: string){
         this.isHammer = Boolean(Number(datatoolState));
         EventManager.emit(NameEvent.TOOL_CHANGE, this.isHammer);
+    }
+
+    public updateStamina(stamina:number){
+        this.wallStamina = stamina;
+    }
+
+    private onTouchControll(event: EventTouch){
+        if(this.wallStamina > 0){
+            this.onTouchStart(event);
+        }
     }
 
     private onTouchStart(event: EventTouch) {
