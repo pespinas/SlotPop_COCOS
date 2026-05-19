@@ -28,6 +28,7 @@ export class TouchController extends Component {
     }
     private changeTool(event: Event, datatoolState: string){
         this.isHammer = Boolean(Number(datatoolState));
+        EventManager.emit(NameEvent.TOOL_CHANGE, this.isHammer);
     }
 
     private onTouchStart(event: EventTouch) {

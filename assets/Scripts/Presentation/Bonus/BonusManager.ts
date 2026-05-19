@@ -19,21 +19,28 @@ export class BonusMachine extends Component {
     protected onLoad(){
         LocalizationService.init(this.labelText.json);
         EventManager.on(NameEvent.TOOL_USED, this.toolUsed, this);
+        EventManager.on(NameEvent.TOOL_CHANGE, this.updateToolButton, this);
         this.labelStart();
 
     }
+    protected onDestroy(){
+        EventManager.off(NameEvent.TOOL_USED, this.toolUsed, this);
+        EventManager.off(NameEvent.TOOL_CHANGE, this.updateToolButton, this);
+    }
+
     private labelStart(){
         this.label.idleText();
         this.label.totalWinText(Balance.getInstance().getBalance());
     }
-    protected onDestroy(){
-        EventManager.off(NameEvent.TOOL_USED, this.toolUsed, this);
+
+    private updateToolButton(isHammer: boolean){
+        this.label.changeToolButton(isHammer);
     }
+
     private toolUsed(isHammer: boolean){
        WallState.getInstance().registerHit(isHammer);
        let stamina = WallState.getInstance().getStamina();
        this.hitsLeft(stamina);
-
     }
 
     private hitsLeft(stamina: number){

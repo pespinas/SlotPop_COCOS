@@ -10,5 +10,6 @@ export enum NameEvent{
     GET_BET = 'GET_BET',
     TOUCH_START = 'TOUCH_START',
     TILED_TOUCHED = 'TILED_TOUCHED',
-    TOOL_USED = 'TOOL_USED'
+    TOOL_USED = 'TOOL_USED',
+    TOOL_CHANGE = 'TOOL_CHANGE'
 }
