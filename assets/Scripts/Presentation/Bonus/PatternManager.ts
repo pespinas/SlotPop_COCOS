@@ -3,6 +3,7 @@ import { _decorator, Component, TiledLayer,TiledMap } from 'cc';
 import {Hardness, TileType} from 'db://assets/Scripts/Domain/Bonus/indexBonusD';
 import {EventManager} from "db://assets/Scripts/Infrastructure/EventManager";
 import {NameEvent} from "db://assets/Scripts/Infrastructure/NameEvent";
+import {PrizeBonusCheck} from "db://assets/Scripts/Application/Bonus/PrizeBonusCheck";
 const { ccclass, property } = _decorator;
  
 @ccclass('PatternManager')
@@ -12,10 +13,8 @@ export class PatternManager extends Component {
     public map: TiledMap = null;
     private layerWall: TiledLayer = null;
 
-    protected start(){
-        this.layerWall= this.map.getLayer("wall");
-    }
     protected onLoad(){
+        this.layerWall= this.map.getLayer("wall");
         EventManager.on(NameEvent.TILED_TOUCHED, this.onTileClicked, this);
     }
     protected onDestroy(){
@@ -33,6 +32,10 @@ export class PatternManager extends Component {
         if(newHardnessV <= 1){
             this.layerWall.setTileGIDAt(TileType.NOTHING, coord.x, coord.y);
             this.layerWall.markForUpdateRenderData();
+            const result:number = PrizeBonusCheck.execute(coord.x, coord.y);
+            if(result>0){
+                EventManager.emit(NameEvent.GEM_FOUND, result);
+            }
         }
         else{
             let newSprite = Hardness[newHardnessV];

@@ -1,4 +1,4 @@
-import { _decorator, Component, EventTouch, Vec3, UITransform, TiledMap, Camera,TiledLayer } from 'cc';
+import { _decorator, Component, EventTouch, Vec3, UITransform, TiledMap, Camera } from 'cc';
 import {EventManager} from "db://assets/Scripts/Infrastructure/EventManager";
 import {NameEvent} from "db://assets/Scripts/Infrastructure/NameEvent";
 const { ccclass, property } = _decorator;
@@ -18,10 +18,11 @@ export class TouchController extends Component {
     private mapSize: { width: number, height: number } = { width: 0, height: 0 };
     private isHammer: boolean = false;
     private wallStamina: number;
+    private hammerStamina: number;
 
-    protected start() {
-        EventManager.on(NameEvent.TOUCH_START, this.onTouchStart, this)
-        this.node.on('touch-start', this.onTouchControll, this);
+    protected onLoad() {
+        EventManager.initGlobalInputs();
+        EventManager.on(NameEvent.TOUCH_START, this.onTouchControll,this);
         this.getTouchReady();
     }
 
@@ -37,9 +38,12 @@ export class TouchController extends Component {
     public updateStamina(stamina:number){
         this.wallStamina = stamina;
     }
+    public updateHammerStamina(stamina:number){
+        this.hammerStamina = stamina;
+    }
 
     private onTouchControll(event: EventTouch){
-        if(this.wallStamina > 0){
+        if((this.wallStamina > 0 && !this.isHammer) || ((this.wallStamina-this.hammerStamina) > 0 && this.isHammer)){
             this.onTouchStart(event);
         }
     }

@@ -17,6 +17,9 @@ export class WallState{
     public getStamina(): number{
         return this.stamina;
     }
+    public getHammerStamina(): number{
+        return this.hammerStamina;
+    }
 
     private updateStamina(hit:number){
         if((this.stamina - hit) < 0){

@@ -23,12 +23,17 @@ export class BonusMachine extends Component {
         LocalizationService.init(this.labelText.json);
         EventManager.on(NameEvent.TOOL_USED, this.toolUsed, this);
         EventManager.on(NameEvent.TOOL_CHANGE, this.updateToolButton, this);
+        EventManager.on(NameEvent.GEM_FOUND, this.gemFound, this);
+
         this.touch.updateStamina(WallState.getInstance().getStamina());
+        this.touch.updateHammerStamina(WallState.getInstance().getHammerStamina());
+
         this.labelStart();
     }
     protected onDestroy(){
         EventManager.off(NameEvent.TOOL_USED, this.toolUsed, this);
         EventManager.off(NameEvent.TOOL_CHANGE, this.updateToolButton, this);
+        EventManager.off(NameEvent.GEM_FOUND, this.gemFound, this)
     }
 
     private labelStart(){
@@ -46,6 +51,13 @@ export class BonusMachine extends Component {
        this.hitsLeft(stamina);
     }
 
+    private gemFound(value:number){
+        const balance = Balance.getInstance().getBalance();
+        const newBalance = balance + value;
+        Balance.getInstance().addMoney(value);
+        this.label.totalWinText(newBalance);
+        this.label.wonText(value);
+    }
     private wallCheckState(isHammer: boolean){
         let stamina = WallState.getInstance().getStamina();
         if (stamina<=0){
@@ -54,10 +66,10 @@ export class BonusMachine extends Component {
         else{
             WallState.getInstance().registerHit(isHammer);
         }
-        this.touch.updateStamina(stamina);
     }
 
     private hitsLeft(stamina: number){
         this.label.bonusHitLeft(stamina);
+        this.touch.updateStamina(stamina);
     }
 }
