@@ -22,9 +22,6 @@ export class SlotLabelController extends LabelController {
     public stateBetButton(state:boolean){
         this.pokeballButton.interactable = state;
     }
-    public wonText(won:number){
-        this.labelTop.string = LocalizationService.getUIGame('LBL_WIN') + " " + won + "";
-    }
     protected getLocalizationKey(key: string): string {
         return LocalizationService.getUIGame(key);
     }

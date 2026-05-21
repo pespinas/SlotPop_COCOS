@@ -15,6 +15,9 @@ export abstract class LabelController extends Component {
     public idleText(){
         this.labelTop.string = LocalizationService.getUIGame('LBL_IDLE');
     }
+    public wonText(won:number){
+        this.labelTop.string = LocalizationService.getUIGame('LBL_WIN') + " " + won + "";
+    }
 
     protected abstract getLocalizationKey(key: string): string;
 
