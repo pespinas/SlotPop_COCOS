@@ -12,5 +12,6 @@ export enum NameEvent{
     TILED_TOUCHED = 'TILED_TOUCHED',
     TOOL_USED = 'TOOL_USED',
     TOOL_CHANGE = 'TOOL_CHANGE',
-    GEM_FOUND = 'GEM_FOUND'
+    GEM_FOUND = 'GEM_FOUND',
+    SCENE = 'CHANGE_SCENE'
 }

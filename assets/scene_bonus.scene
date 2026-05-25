@@ -24,11 +24,11 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 56
+      "__id__": 57
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 57
+      "__id__": 58
     },
     "_id": "b751c271-5b1b-4cc6-9c07-1694a14cf98d"
   },
@@ -147,6 +147,9 @@
       },
       {
         "__id__": 55
+      },
+      {
+        "__id__": 56
       }
     ],
     "_prefab": null,
@@ -1847,7 +1850,21 @@
     "touch": {
       "__id__": 18
     },
+    "SceneChanger": {
+      "__id__": 56
+    },
     "_id": "bauglutANDzIz1A9CZkwTm"
+  },
+  {
+    "__type__": "5cf9cFOkDBA67xQx/Z8Ycmh",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 4
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "_id": "14c02OPptIeJsd1+nYE1D/"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -1856,19 +1873,19 @@
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 58
-    },
-    "shadows": {
       "__id__": 59
     },
-    "_skybox": {
+    "shadows": {
       "__id__": 60
     },
-    "fog": {
+    "_skybox": {
       "__id__": 61
     },
-    "octree": {
+    "fog": {
       "__id__": 62
+    },
+    "octree": {
+      "__id__": 63
     }
   },
   {

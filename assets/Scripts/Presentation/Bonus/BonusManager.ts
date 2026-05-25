@@ -6,6 +6,8 @@ import {NameEvent} from "db://assets/Scripts/Infrastructure/NameEvent";
 import {Balance} from "db://assets/Scripts/Domain/Common/Balance";
 import {WallState} from "db://assets/Scripts/Domain/Bonus/indexBonusD";
 import {TouchController} from "db://assets/Scripts/Presentation/Bonus/TouchController";
+import {SceneController} from "db://assets/Scripts/Presentation/Common/SceneController";
+import {SceneName} from "db://assets/Scripts/Domain/Common/SceneDefinition";
 
 const { ccclass, property } = _decorator;
  
@@ -18,6 +20,8 @@ export class BonusMachine extends Component {
     public label: BonusLabelController;
     @property(TouchController)
     public touch: TouchController;
+    @property(SceneController)
+    public SceneChanger: SceneController;
 
     protected onLoad(){
         LocalizationService.init(this.labelText.json);
@@ -25,6 +29,7 @@ export class BonusMachine extends Component {
         EventManager.on(NameEvent.TOOL_CHANGE, this.updateToolButton, this);
         EventManager.on(NameEvent.GEM_FOUND, this.gemFound, this);
 
+        WallState.getInstance().newWall();
         this.touch.updateStamina(WallState.getInstance().getStamina());
         this.touch.updateHammerStamina(WallState.getInstance().getHammerStamina());
 
@@ -39,6 +44,10 @@ export class BonusMachine extends Component {
     private labelStart(){
         this.label.idleText();
         this.label.totalWinText(Balance.getInstance().getBalance());
+    }
+
+    public changeScenes(){
+        this.SceneChanger.startLoadingBonus(SceneName.BASE_SLOT);
     }
 
     private updateToolButton(isHammer: boolean){
@@ -58,14 +67,15 @@ export class BonusMachine extends Component {
         this.label.totalWinText(newBalance);
         this.label.wonText(value);
     }
+
     private wallCheckState(isHammer: boolean){
+        WallState.getInstance().registerHit(isHammer);
         let stamina = WallState.getInstance().getStamina();
-        if (stamina<=0){
-            this.label.stateButton();
+        console.log(stamina);
+        if(stamina == 0){
+            this.changeScenes()
         }
-        else{
-            WallState.getInstance().registerHit(isHammer);
-        }
+
     }
 
     private hitsLeft(stamina: number){

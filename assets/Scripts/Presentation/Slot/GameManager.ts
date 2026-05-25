@@ -3,9 +3,11 @@ import {EventManager} from "db://assets/Scripts/Infrastructure/EventManager";
 import {NameEvent} from "db://assets/Scripts/Infrastructure/NameEvent";
 import {SlotController} from "db://assets/Scripts/Presentation/Slot/SlotController";
 import {SlotLabelController} from "db://assets/Scripts/Presentation/Slot/SlotLabelController";
-import { LocalizationService } from "db://assets/Scripts/Application/Common/LocalizationService";
+import {LocalizationService} from "db://assets/Scripts/Application/Common/LocalizationService";
 import {Balance} from "db://assets/Scripts/Domain/Common/Balance";
 import {PrizesController} from "db://assets/Scripts/Presentation/Slot/PrizesController";
+import {SceneName} from "db://assets/Scripts/Domain/Common/SceneDefinition";
+import {SceneController} from "db://assets/Scripts/Presentation/Common/SceneController";
 
 const { ccclass, property } = _decorator;
  
@@ -19,7 +21,8 @@ export class GameManager extends Component {
     public slotController: SlotController;
     @property(PrizesController)
     public prizesController: PrizesController;
-
+    @property(SceneController)
+    public SceneChanger: SceneController;
 
     private betId: number;
     private bet: number;
@@ -28,6 +31,7 @@ export class GameManager extends Component {
         EventManager.on(NameEvent.REQUEST_SPIN, this.buttonState, this)
         EventManager.on(NameEvent.REQUEST_STOP, this.buttonState, this)
         EventManager.on(NameEvent.PRIZES_PAY, this.wonLabel, this)
+        EventManager.on(NameEvent.SCENE, this.changeScenes, this)
 
         LocalizationService.init(this.labelText.json);
         this.betId = Balance.getInstance().getBetId();
@@ -40,9 +44,13 @@ export class GameManager extends Component {
         EventManager.off(NameEvent.REQUEST_SPIN, this.buttonState)
         EventManager.off(NameEvent.REQUEST_STOP, this.buttonState)
         EventManager.off(NameEvent.PRIZES_PAY, this.wonLabel)
+        EventManager.off(NameEvent.SCENE, this.changeScenes)
     }
     public getBetState(){
         return this.betId;
+    }
+    public changeScenes(){
+        this.SceneChanger.startLoadingBonus(SceneName.BONUS_SLOT);
     }
     private updateLabel(){
         this.label.idleText();

@@ -1,7 +1,7 @@
-import { _decorator, Component, Node } from 'cc';
 export class WallState{
     private static _instance: WallState;
-    private stamina: number = 150;
+    private WallStamina: number = 150;
+    private stamina: number = 0;
     private hammerStamina:number = 2;
     private pickaxeStamina:number = 1;
 
@@ -12,6 +12,10 @@ export class WallState{
             this._instance = new WallState();
         }
         return this._instance;
+    }
+
+    public newWall(){
+        this.stamina = this.WallStamina;
     }
 
     public getStamina(): number{
@@ -36,5 +40,4 @@ export class WallState{
             this.updateStamina(this.pickaxeStamina);
         }
     }
-
 }
