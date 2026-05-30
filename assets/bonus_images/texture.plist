@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+    <key>frames</key>
+    <dict>
+        <key>sprite_589</key>
+        <dict>
+        <key>frame</key>
+        <string>{{0,0}, {14,7}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{0,0}, {14,7}}</string>
+        <key>sourceSize</key>
+        <string>{14,7}</string>
+        </dict>
+      <key>sprite_70</key>
+        <dict>
+        <key>frame</key>
+        <string>{{18,0}, {14,13}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{18,0}, {14,13}}</string>
+        <key>sourceSize</key>
+        <string>{14,13}</string>
+        </dict>
+      <key>sprite_71</key>
+        <dict>
+        <key>frame</key>
+        <string>{{36,0}, {14,13}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{36,0}, {14,13}}</string>
+        <key>sourceSize</key>
+        <string>{14,13}</string>
+        </dict>
+      <key>sprite_595</key>
+        <dict>
+        <key>frame</key>
+        <string>{{54,0}, {16,15}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{54,0}, {16,15}}</string>
+        <key>sourceSize</key>
+        <string>{16,15}</string>
+        </dict>
+      <key>sprite_596</key>
+        <dict>
+        <key>frame</key>
+        <string>{{74,0}, {8,15}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{74,0}, {8,15}}</string>
+        <key>sourceSize</key>
+        <string>{8,15}</string>
+        </dict>
+      <key>sprite_58</key>
+        <dict>
+        <key>frame</key>
+        <string>{{86,0}, {14,15}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{86,0}, {14,15}}</string>
+        <key>sourceSize</key>
+        <string>{14,15}</string>
+        </dict>
+      <key>sprite_59</key>
+        <dict>
+        <key>frame</key>
+        <string>{{104,0}, {14,15}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{104,0}, {14,15}}</string>
+        <key>sourceSize</key>
+        <string>{14,15}</string>
+        </dict>
+      <key>sprite_51</key>
+        <dict>
+        <key>frame</key>
+        <string>{{0,17}, {16,16}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{0,17}, {16,16}}</string>
+        <key>sourceSize</key>
+        <string>{16,16}</string>
+        </dict>
+      <key>sprite_52</key>
+        <dict>
+        <key>frame</key>
+        <string>{{20,17}, {16,16}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{20,17}, {16,16}}</string>
+        <key>sourceSize</key>
+        <string>{16,16}</string>
+        </dict>
+      <key>sprite_66</key>
+        <dict>
+        <key>frame</key>
+        <string>{{40,17}, {16,16}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{40,17}, {16,16}}</string>
+        <key>sourceSize</key>
+        <string>{16,16}</string>
+        </dict>
+      <key>sprite_80</key>
+        <dict>
+        <key>frame</key>
+        <string>{{60,17}, {16,16}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{60,17}, {16,16}}</string>
+        <key>sourceSize</key>
+        <string>{16,16}</string>
+        </dict>
+      <key>sprite_81</key>
+        <dict>
+        <key>frame</key>
+        <string>{{80,17}, {16,16}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{80,17}, {16,16}}</string>
+        <key>sourceSize</key>
+        <string>{16,16}</string>
+        </dict>
+      <key>sprite_84</key>
+        <dict>
+        <key>frame</key>
+        <string>{{100,17}, {16,16}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{100,17}, {16,16}}</string>
+        <key>sourceSize</key>
+        <string>{16,16}</string>
+        </dict>
+      <key>sprite_86</key>
+        <dict>
+        <key>frame</key>
+        <string>{{0,37}, {16,16}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{0,37}, {16,16}}</string>
+        <key>sourceSize</key>
+        <string>{16,16}</string>
+        </dict>
+      <key>sprite_87</key>
+        <dict>
+        <key>frame</key>
+        <string>{{20,37}, {16,16}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{20,37}, {16,16}}</string>
+        <key>sourceSize</key>
+        <string>{16,16}</string>
+        </dict>
+      <key>sprite_88</key>
+        <dict>
+        <key>frame</key>
+        <string>{{40,37}, {16,16}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{40,37}, {16,16}}</string>
+        <key>sourceSize</key>
+        <string>{16,16}</string>
+        </dict>
+      <key>sprite_140</key>
+        <dict>
+        <key>frame</key>
+        <string>{{60,37}, {16,16}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{60,37}, {16,16}}</string>
+        <key>sourceSize</key>
+        <string>{16,16}</string>
+        </dict>
+      <key>sprite_141</key>
+        <dict>
+        <key>frame</key>
+        <string>{{80,37}, {16,16}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{80,37}, {16,16}}</string>
+        <key>sourceSize</key>
+        <string>{16,16}</string>
+        </dict>
+      <key>sprite_142</key>
+        <dict>
+        <key>frame</key>
+        <string>{{100,37}, {16,16}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{100,37}, {16,16}}</string>
+        <key>sourceSize</key>
+        <string>{16,16}</string>
+        </dict>
+      <key>sprite_143</key>
+        <dict>
+        <key>frame</key>
+        <string>{{0,57}, {16,16}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{0,57}, {16,16}}</string>
+        <key>sourceSize</key>
+        <string>{16,16}</string>
+        </dict>
+      <key>sprite_166</key>
+        <dict>
+        <key>frame</key>
+        <string>{{20,57}, {16,16}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{20,57}, {16,16}}</string>
+        <key>sourceSize</key>
+        <string>{16,16}</string>
+        </dict>
+      <key>sprite_167</key>
+        <dict>
+        <key>frame</key>
+        <string>{{40,57}, {16,16}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{40,57}, {16,16}}</string>
+        <key>sourceSize</key>
+        <string>{16,16}</string>
+        </dict>
+    </dict>
+    <key>metadata</key>
+    <dict>
+        <key>format</key>
+        <integer>2</integer>
+        <key>pixelFormat</key>
+        <string>RGBA8888</string>
+        <key>premultiplyAlpha</key>
+        <false/>
+        <key>realTextureFileName</key>
+        <string>texture.png</string>
+        <key>size</key>
+        <string>{0,0}</string>
+        <key>textureFileName</key>
+        <string>texture</string>
+    </dict>
+    </dict>
+</plist>
+        

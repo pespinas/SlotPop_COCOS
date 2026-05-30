@@ -8,5 +8,8 @@
   "UI_ERRORS": {
     "NO_BALANCE": "NO POKEMONEY MAN",
     "CONN_ERROR": "Error de conexión"
+  },
+  "UI_BONUS": {
+    "STAMINA_LEFT": "STAMINA    LEFT:"
   }
 }

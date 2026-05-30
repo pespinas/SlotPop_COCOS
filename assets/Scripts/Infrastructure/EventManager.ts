@@ -1,10 +1,21 @@
 
-import {EventTarget } from 'cc';
+import {EventTarget,input, Input, EventTouch } from 'cc';
 import { NameEvent } from './NameEvent';
-const bus = new EventTarget();
 export type EventCallback<T = unknown> = (data?: T) => void;
 
+const bus = new EventTarget();
+
 export class EventManager {
+
+    private static isInitialized = false;
+    public static initGlobalInputs() {
+        if (this.isInitialized) return;
+        input.on(Input.EventType.TOUCH_START, (event: EventTouch) => {
+            this.emit(NameEvent.TOUCH_START, event);
+        });
+        this.isInitialized = true;
+    }
+
     static emit<T = unknown>(nameEvent: NameEvent, data?: T) {
         bus.emit(nameEvent, data);
     }
