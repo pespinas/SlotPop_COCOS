@@ -19,6 +19,9 @@ El núcleo de este proyecto es la **independencia del framework**. Toda la lógi
 3. **Infrastructure (Círculo Verde):** Adaptadores y servicios globales. El `EventManager.ts` actúa como puente de comunicación asíncrona mediante el patrón Observer.
 4. **Presentation (Círculo Azul):** La capa visual de Cocos Creator. Los componentes gestionan los `RigidBody2D`, los efectos de transición de pantalla (*Fade In / Fade Out*) y la actualización de los nodos en el Canvas de excavación.
 
+<img width="772" height="567" alt="1_wOmAHDN_zKZJns9YDjtrMw" src="https://github.com/user-attachments/assets/39acd779-9dd5-490c-926d-a23f7505c7d9" />
+
+
 ---
 
 ## 🎮 Mecánicas de Juego y "Game Feel"
