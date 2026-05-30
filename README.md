@@ -61,3 +61,17 @@ assets/
     ├── Application/   # Lógica de Premios, Reglas de Entrada a Bonus y Casos de Uso
     ├── Infrastructure/# Event Manager, Controladores de Persistencia y Tipos
     └── Presentation/  # Controladores de Sprites, Transiciones de Escena (Fade) y UI del Muro
+````
+## 🚀 Live Demo
+
+
+
+Puedes probar el prototipo funcional directamente en tu navegador a través de **itch.io**:
+
+
+
+🔗 **Enlace:** [https://pespinas.itch.io/pokeslot](https://pespinas.itch.io/pokeslot)  
+
+🔑 **Contraseña de acceso:** `lelepancha` 
+
+
