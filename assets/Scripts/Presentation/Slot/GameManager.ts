@@ -26,6 +26,7 @@ export class GameManager extends Component {
 
     private betId: number;
     private bet: number;
+    private totalWon:number = 0;
 
     protected onLoad(){
         EventManager.on(NameEvent.REQUEST_SPIN, this.buttonState, this)
@@ -38,6 +39,7 @@ export class GameManager extends Component {
         this.bet = Balance.getInstance().getBet(this.betId);
 
         this.updateBalance(0);
+        this.label.changeBet(this.betId, this.bet);
         this.updateLabel();
     }
     protected onDestroy() {
@@ -58,6 +60,7 @@ export class GameManager extends Component {
     private wonLabel(value:number){
         this.label.wonText(value);
         this.updateBalance(value);
+        this.totalWon += value;
     }
     private updateBalance(value:number){
         Balance.getInstance().addMoney(value);
@@ -82,14 +85,23 @@ export class GameManager extends Component {
             this.updateBalanceOnSpin();
         }
         else{
+
             this.scheduleOnce(() => {
+                this.bonusStartCheck();
                 this.slotController.stateSpinButton(true);
                 this.label.stateBetButton(true);
                 this.updateLabel();
             }, 0.4);
 
         }
-
-
+    }
+    private bonusStartCheck(){
+        if(this.totalWon >= this.bet * 3){
+            this.SceneChanger.startLoadingBonus(SceneName.BONUS_SLOT);
+            console.log(this.totalWon)
+        }
+        else{
+            this.totalWon = 0;
+        }
     }
 }
