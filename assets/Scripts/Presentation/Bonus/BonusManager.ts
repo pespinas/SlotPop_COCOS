@@ -71,7 +71,6 @@ export class BonusMachine extends Component {
     private wallCheckState(isHammer: boolean){
         WallState.getInstance().registerHit(isHammer);
         let stamina = WallState.getInstance().getStamina();
-        console.log(stamina);
         if(stamina == 0){
             this.changeScenes()
         }

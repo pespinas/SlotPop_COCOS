@@ -35,7 +35,6 @@ export class PrizesController extends Component{
     }
     public setBet(bet:number){
         this.bet = bet;
-        console.log(this.bet)
     }
 
     private prizeSymbol(result){
