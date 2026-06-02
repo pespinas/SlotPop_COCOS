@@ -98,10 +98,7 @@ export class GameManager extends Component {
     private bonusStartCheck(){
         if(this.totalWon >= this.bet * 3){
             this.SceneChanger.startLoadingBonus(SceneName.BONUS_SLOT);
-            console.log(this.totalWon)
         }
-        else{
-            this.totalWon = 0;
-        }
+        this.totalWon = 0;
     }
 }

@@ -1,5 +1,5 @@
 
-import { _decorator, Component, director, UIOpacity, tween } from 'cc';
+import { _decorator, Component, director, UIOpacity, tween, BlockInputEvents } from 'cc';
 const { ccclass, property } = _decorator;
  
 @ccclass('SceneController')
@@ -7,6 +7,8 @@ export class SceneController extends Component {
 
     @property(UIOpacity)
     public uiOpacity: UIOpacity | null = null;
+    @property(BlockInputEvents)
+    public blocker: BlockInputEvents | null = null;
     @property
     public fadeInTime: number = 1.5;
     @property
@@ -15,7 +17,7 @@ export class SceneController extends Component {
     public fadeOutTime: number = 1.5;
 
     public startLoadingBonus(sceneName: string) {
-        this.uiOpacity.opacity = 0;
+        this.blocker.enabled = true;
         tween(this.uiOpacity)
             .to(this.fadeInTime, { opacity: 255 }, { easing: 'linear' })
             .delay(this.holdTime)
