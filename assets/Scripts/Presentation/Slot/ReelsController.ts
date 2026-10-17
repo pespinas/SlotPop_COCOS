@@ -2,6 +2,7 @@ import {_decorator, Component, Node, tween, Vec3} from 'cc';
 import {EventManager} from 'db://assets/Scripts/Infrastructure/EventManager';
 import {NameEvent} from 'db://assets/Scripts/Infrastructure/NameEvent';
 import {SymbolController} from "db://assets/Scripts/Presentation/Slot/SymbolController";
+import {SymbolRNG} from "db://assets/Scripts/Domain/Slot/SymbolRNG";
 
 const { ccclass, property } = _decorator;
 
@@ -21,11 +22,15 @@ export class ReelsController extends Component {
     private visualOrder:{name: string, y: number, ctrl: any}[]= [];
 
 
-    public init(index: number, bottomY: number, topY: number, fallDuration: number) {
+    public init(index: number, bottomY: number, topY: number, fallDuration: number, rng: SymbolRNG) {
         this.reelIndex = index;
         this.minY = bottomY;
         this.maxY = topY;
         this.duration = fallDuration;
+        this.getComponentsInChildren(SymbolController).forEach(ctrl => {
+            ctrl.init(rng);
+            ctrl.setNewSprite();
+        });
     }
 
     protected onLoad () {

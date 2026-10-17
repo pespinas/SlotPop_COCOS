@@ -2,7 +2,6 @@ import {_decorator, Component, instantiate, Node, Prefab,Button} from 'cc';
 import {NameEvent} from 'db://assets/Scripts/Infrastructure/NameEvent';
 import {EventManager} from 'db://assets/Scripts/Infrastructure/EventManager';
 import {SymbolRNG} from 'db://assets/Scripts/Domain/Slot/SymbolRNG';
-import {SymbolController} from 'db://assets/Scripts/Presentation/Slot/SymbolController';
 import {ReelsController} from 'db://assets/Scripts/Presentation/Slot/ReelsController';
 import {PresentConfig} from "db://assets/Scripts/Presentation/Slot/PresentConfig";
 
@@ -37,14 +36,9 @@ export class SlotController extends Component {
                 index,
                 this.config.bottomY,
                 this.config.topY,
-                this.config.spinDuration
+                this.config.spinDuration,
+                this.globalRng
             );
-
-            const childController = newReel.getComponentsInChildren(SymbolController);
-            childController.forEach(ctrl => {
-                ctrl.init(this.globalRng);
-                ctrl.setNewSprite();
-            });
         });
         EventManager.on(NameEvent.REEL_STOPPED, this.EndReelResult, this);
         EventManager.on(NameEvent.PRIZES_FOUND, this.onPrizesFound, this);
