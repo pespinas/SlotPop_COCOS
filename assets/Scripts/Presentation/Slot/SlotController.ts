@@ -40,11 +40,11 @@ export class SlotController extends Component {
                 this.globalRng
             );
         });
-        EventManager.on(NameEvent.REEL_STOPPED, this.EndReelResult, this);
+        EventManager.on(NameEvent.REEL_STOPPED, this.onReelStopped, this);
         EventManager.on(NameEvent.PRIZES_FOUND, this.onPrizesFound, this);
     }
     protected onDestroy(){
-        EventManager.off(NameEvent.REEL_STOPPED, this.EndReelResult, this);
+        EventManager.off(NameEvent.REEL_STOPPED, this.onReelStopped, this);
         EventManager.off(NameEvent.PRIZES_FOUND, this.onPrizesFound, this);
     }
     private onSpinClick(){
@@ -62,24 +62,24 @@ export class SlotController extends Component {
         })
     }
     private onPrizesFound(allPrizes: {x: number, y: number}[][]){
-        const rowsSymbols: number[][]= this.reelControllers.map(() =>[]);
+        const winRowsPerReel: number[][]= this.reelControllers.map(() =>[]);
         for (let i = 0; i < allPrizes.length; i++) {
             for (let j = 0; j < allPrizes[i].length; j++) {
                 let coord = allPrizes[i][j];
-                rowsSymbols[coord.x].push(coord.y);
+                winRowsPerReel[coord.x].push(coord.y);
             }
         }
         this.scheduleOnce(() => {
-        rowsSymbols.forEach((rows,index) => {
+            winRowsPerReel.forEach((rows,index) => {
                 this.reelControllers[index].startWinAnimation(rows);
-        })
+            })
         }, 0.2);
         this.count = 0;
     }
-    private EndReelResult(data: { symbols: string[], index: number }){
+    private onReelStopped(data: { symbols: string[], index: number }){
         this.resultSlot[data.index] = data.symbols;
         this.count++;
-        if(this.count == this.masks.length){
+        if(this.count == this.reelControllers.length){
             EventManager.emit(NameEvent.CHECK_PRIZES, this.resultSlot);
         }
     }
