@@ -12,10 +12,10 @@ const { ccclass, property } = _decorator;
 export class SlotController extends Component {
 
     @property({ type: [Node] })
-    masks = [];
+    masks: Node[] = [];
     @property({ type: Prefab })
     symbolPref: Prefab;
-    @property({ type: [Button] })
+    @property({ type: Button })
     spinButton: Button;
 
     @property({ type: PresentConfig})
