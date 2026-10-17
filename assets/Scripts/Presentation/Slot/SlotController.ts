@@ -73,7 +73,7 @@ export class SlotController extends Component {
             winRowsPerReel.forEach((rows,index) => {
                 this.reelControllers[index].startWinAnimation(rows);
             })
-        }, 0.2);
+        }, this.config.winAnimationDelay);
         this.count = 0;
     }
     private onReelStopped(data: { symbols: string[], index: number }){

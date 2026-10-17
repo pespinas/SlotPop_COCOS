@@ -13,4 +13,7 @@ export class PresentConfig extends Component {
     @property({ group: { name: 'Reels Animation' }, tooltip: 'Duración base de la caída en segundos' })
     public spinDuration: number = 1.0;
 
+    @property({ group: { name: 'Reels Animation' }, tooltip: 'Espera en segundos antes de animar los símbolos premiados' })
+    public winAnimationDelay: number = 0.2;
+
 }
