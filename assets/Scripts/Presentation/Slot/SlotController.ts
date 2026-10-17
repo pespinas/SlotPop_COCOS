@@ -13,8 +13,8 @@ export class SlotController extends Component {
 
     @property({ type: [Node] })
     masks: Node[] = [];
-    @property({ type: Prefab })
-    symbolPref: Prefab;
+    @property({ type: Prefab, formerlySerializedAs: 'symbolPref' })
+    reelPrefab: Prefab;
     @property({ type: Button })
     spinButton: Button;
 
@@ -29,7 +29,7 @@ export class SlotController extends Component {
 
     protected onLoad(){
         this.masks.forEach((mask,index) => {
-            const newReel = instantiate (this.symbolPref);
+            const newReel = instantiate (this.reelPrefab);
             mask.addChild(newReel);
             const reelCtrl = newReel.getComponent(ReelsController);
             this.reelControllers.push(reelCtrl);
