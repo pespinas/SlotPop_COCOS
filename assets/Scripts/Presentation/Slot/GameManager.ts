@@ -43,10 +43,10 @@ export class GameManager extends Component {
         this.updateLabel();
     }
     protected onDestroy() {
-        EventManager.off(NameEvent.REQUEST_SPIN, this.buttonState)
-        EventManager.off(NameEvent.REQUEST_STOP, this.buttonState)
-        EventManager.off(NameEvent.PRIZES_PAY, this.wonLabel)
-        EventManager.off(NameEvent.SCENE, this.changeScenes)
+        EventManager.off(NameEvent.REQUEST_SPIN, this.buttonState, this)
+        EventManager.off(NameEvent.REQUEST_STOP, this.buttonState, this)
+        EventManager.off(NameEvent.PRIZES_PAY, this.wonLabel, this)
+        EventManager.off(NameEvent.SCENE, this.changeScenes, this)
     }
     public getBetState(){
         return this.betId;
