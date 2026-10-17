@@ -54,9 +54,9 @@ export class GameManager extends Component {
         this.label.idleText();
     }
     private wonLabel(value:number){
-        this.label.wonText(value);
-        this.updateBalance(value);
         this.totalWon += value;
+        this.label.wonText(this.totalWon);
+        this.updateBalance(value);
     }
     private updateBalance(value:number){
         Balance.getInstance().addMoney(value);
