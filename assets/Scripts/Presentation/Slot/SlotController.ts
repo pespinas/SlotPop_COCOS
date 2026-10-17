@@ -21,9 +21,7 @@ export class SlotController extends Component {
     config: PresentConfig = null;
 
     private globalRng = new SymbolRNG();
-    private resultSlot: string[][] = [];
     private reelControllers: ReelsController[] = [];
-    private count: number = 0;
 
 
     protected onLoad(){
@@ -40,28 +38,18 @@ export class SlotController extends Component {
                 this.globalRng
             );
         });
-        EventManager.on(NameEvent.REEL_STOPPED, this.onReelStopped, this);
-        EventManager.on(NameEvent.PRIZES_FOUND, this.onPrizesFound, this);
-    }
-    protected onDestroy(){
-        EventManager.off(NameEvent.REEL_STOPPED, this.onReelStopped, this);
-        EventManager.off(NameEvent.PRIZES_FOUND, this.onPrizesFound, this);
     }
     private onSpinClick(){
-        EventManager.emit(NameEvent.REQUEST_SPIN, true);
+        EventManager.emit(NameEvent.REQUEST_SPIN);
         this.stateSpinButton(false);
-        this.count = 0;
-        this.resultSlot = [];
     }
     public stateSpinButton(state:boolean) {
         this.spinButton.interactable = state;
     }
-    public startSpin(){
-        this.reelControllers.forEach(reel => {
-            reel.reelStartMovement();
-        })
+    public spin(): Promise<string[][]> {
+        return Promise.all(this.reelControllers.map(reel => reel.reelStartMovement()));
     }
-    private onPrizesFound(allPrizes: {x: number, y: number}[][]){
+    public async playWin(allPrizes: {x: number, y: number}[][]): Promise<string[][]> {
         const winRowsPerReel: number[][]= this.reelControllers.map(() =>[]);
         for (let i = 0; i < allPrizes.length; i++) {
             for (let j = 0; j < allPrizes[i].length; j++) {
@@ -69,19 +57,8 @@ export class SlotController extends Component {
                 winRowsPerReel[coord.x].push(coord.y);
             }
         }
-        this.scheduleOnce(() => {
-            winRowsPerReel.forEach((rows,index) => {
-                this.reelControllers[index].startWinAnimation(rows);
-            })
-        }, this.config.winAnimationDelay);
-        this.count = 0;
-    }
-    private onReelStopped(data: { symbols: string[], index: number }){
-        this.resultSlot[data.index] = data.symbols;
-        this.count++;
-        if(this.count == this.reelControllers.length){
-            EventManager.emit(NameEvent.CHECK_PRIZES, this.resultSlot);
-        }
+        await new Promise<void>(resolve => this.scheduleOnce(() => resolve(), this.config.winAnimationDelay));
+        return Promise.all(winRowsPerReel.map((rows,index) => this.reelControllers[index].startWinAnimation(rows)));
     }
 
 }

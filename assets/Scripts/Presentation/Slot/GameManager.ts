@@ -29,9 +29,7 @@ export class GameManager extends Component {
     private totalWon:number = 0;
 
     protected onLoad(){
-        EventManager.on(NameEvent.REQUEST_SPIN, this.buttonState, this)
-        EventManager.on(NameEvent.REQUEST_STOP, this.buttonState, this)
-        EventManager.on(NameEvent.PRIZES_PAY, this.wonLabel, this)
+        EventManager.on(NameEvent.REQUEST_SPIN, this.onSpinRequested, this)
         EventManager.on(NameEvent.SCENE, this.changeScenes, this)
 
         LocalizationService.init(this.labelText.json);
@@ -43,9 +41,7 @@ export class GameManager extends Component {
         this.updateLabel();
     }
     protected onDestroy() {
-        EventManager.off(NameEvent.REQUEST_SPIN, this.buttonState, this)
-        EventManager.off(NameEvent.REQUEST_STOP, this.buttonState, this)
-        EventManager.off(NameEvent.PRIZES_PAY, this.wonLabel, this)
+        EventManager.off(NameEvent.REQUEST_SPIN, this.onSpinRequested, this)
         EventManager.off(NameEvent.SCENE, this.changeScenes, this)
     }
     public getBetState(){
@@ -77,23 +73,25 @@ export class GameManager extends Component {
         Balance.getInstance().spendMoney(this.bet);
         this.updateBalance(0);
     }
-    private buttonState(state: boolean){
-        if(state){
-            this.slotController.startSpin();
-            this.prizesController.setBet(this.betId);
-            this.label.stateBetButton(false);
-            this.updateBalanceOnSpin();
-        }
-        else{
+    private async onSpinRequested(){
+        this.prizesController.setBet(this.betId);
+        this.label.stateBetButton(false);
+        this.updateBalanceOnSpin();
 
-            this.scheduleOnce(() => {
-                this.bonusStartCheck();
-                this.slotController.stateSpinButton(true);
-                this.label.stateBetButton(true);
-                this.updateLabel();
-            }, 0.4);
-
+        let symbols = await this.slotController.spin();
+        let result = this.prizesController.evaluate(symbols);
+        while (result) {
+            this.wonLabel(result.win);
+            symbols = await this.slotController.playWin(result.coord);
+            result = this.prizesController.evaluate(symbols);
         }
+
+        this.scheduleOnce(() => {
+            this.bonusStartCheck();
+            this.slotController.stateSpinButton(true);
+            this.label.stateBetButton(true);
+            this.updateLabel();
+        }, 0.4);
     }
     private bonusStartCheck(){
         if(this.totalWon >= this.bet * 3){

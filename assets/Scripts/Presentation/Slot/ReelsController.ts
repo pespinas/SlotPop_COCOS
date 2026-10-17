@@ -16,8 +16,6 @@ export class ReelsController extends Component {
     private minY = 0;
     private maxY = 0;
     private duration = 0;
-    private count= 0;
-    private result: string[]=[];
     private allreelOrder:{name: string, y: number, currentIndex: number,ctrl: any;}[]= [];
     private visualOrder:{name: string, y: number, ctrl: any}[]= [];
 
@@ -45,15 +43,13 @@ export class ReelsController extends Component {
         EventManager.off(NameEvent.ON_SPIN, this.reelStartMovement, this);
     }
 
-    public reelStartMovement(){
+    public async reelStartMovement(): Promise<string[]> {
         this._symbolCtrl.sort((a, b) => a.node.position.y - b.node.position.y);
-        this._symbolCtrl.forEach((symbol,index) => {
-            const ctrl = this._symbolCtrl[index];
-            this.reelMovement(symbol.node,ctrl);
-        })
         this.visualOrder = [];
+        await Promise.all(this._symbolCtrl.map(ctrl => this.reelMovement(ctrl.node, ctrl)));
+        return this.readVisibleSymbols();
     }
-    private eventEndReel() {
+    private readVisibleSymbols(): string[] {
         const sortedByY = [...this._symbolCtrl].sort((a, b) => a.node.position.y - b.node.position.y);
         this.allreelOrder = sortedByY.map((ctrl,index) => ({
             name: ctrl.SymbolName,
@@ -64,17 +60,11 @@ export class ReelsController extends Component {
         this.allreelOrder.sort((a,b) => a.y - b.y);
         this.visualOrder = [...this.allreelOrder];
         this.visualOrder.pop();
-        this.visualOrder.forEach((ctrl,index) => {
-            this.result.push(ctrl.name);
-        });
-
-        EventManager.emit(NameEvent.REEL_STOPPED,{symbols:[...this.result], index: this.reelIndex});
-        this.result.length = 0;
-        this.count = 0;
+        return this.visualOrder.map(symbol => symbol.name);
     }
 
-    private reelMovement(symbol: Node,ctrl: SymbolController) {
-        const moveStep = () => {
+    private reelMovement(symbol: Node,ctrl: SymbolController): Promise<void> {
+        return new Promise(resolve => {
             const distanceToTravel = symbol.position.y - this.minY;
             const targetY = symbol.position.y;
             const speed = (this.maxY - this.minY) / this.duration;
@@ -89,15 +79,11 @@ export class ReelsController extends Component {
                     ctrl.setNewSprite();
                 })
                 .to(fallInDuration, { position: new Vec3(0, targetY, 0) }, { easing: 'bounceOut' })
-                .call(() =>{
-                    this.count++
-                    if (this.count == this.symbols.length)this.eventEndReel();
-                })
+                .call(() => resolve())
                 .start();
-        };
-        moveStep();
+        });
     }
-    public startWinAnimation(winSymbol: number[]){
+    public async startWinAnimation(winSymbol: number[]): Promise<string[]> {
         const winSize= winSymbol.length;
         winSymbol.forEach(rowIndex => {
             const symbol = this.visualOrder[rowIndex].ctrl.node;
@@ -108,12 +94,12 @@ export class ReelsController extends Component {
                 })
                 .start();
         })
-        this.scheduleOnce(() => {
-            this.continueFall(winSymbol, winSize);
-        }, 0.5);
+        await new Promise<void>(resolve => this.scheduleOnce(() => resolve(), 0.5));
+        await this.continueFall(winSymbol, winSize);
+        return this.readVisibleSymbols();
     }
 
-    private continueFall(winSymbol: number[], numSymbol: number){
+    private continueFall(winSymbol: number[], numSymbol: number): Promise<void[]> {
         const winningSymbols = this.allreelOrder.filter(symbol =>
             winSymbol.indexOf(symbol.currentIndex) != -1
         );
@@ -122,26 +108,21 @@ export class ReelsController extends Component {
         );
         notWinSymbols.sort((a, b) => a.y - b.y);
         winningSymbols.sort((a, b) => a.y - b.y);
-        let countSymbol=0;
-        const onFinish = () => {
-            countSymbol++;
-            if (countSymbol === this.allreelOrder.length) {
-                this.eventEndReel();
-            }
-        };
-
+        const falls: Promise<void>[] = [];
 
         let freeSpot = 0;
         notWinSymbols.forEach((symbol, i) => {
             const targetY = this.allreelOrder[freeSpot].y;
-            tween(symbol.ctrl.node)
-                .to(0.3, { position: new Vec3(0, targetY, 0) }, { easing: "bounceOut" })
-                .call(() => {
-                    symbol.y = targetY;
-                    symbol.currentIndex = freeSpot;
-                    onFinish();
-                })
-                .start();
+            falls.push(new Promise(resolve => {
+                tween(symbol.ctrl.node)
+                    .to(0.3, { position: new Vec3(0, targetY, 0) }, { easing: "bounceOut" })
+                    .call(() => {
+                        symbol.y = targetY;
+                        symbol.currentIndex = freeSpot;
+                        resolve();
+                    })
+                    .start();
+            }));
             freeSpot++;
         });
 
@@ -150,13 +131,14 @@ export class ReelsController extends Component {
             symbol.ctrl.setNewSprite();
             symbol.ctrl.node.setScale(new Vec3(0.8,0.8,0));
             const targetY = this.allreelOrder[freeSpot].y;
-            tween(symbol.ctrl.node)
-                .to(0.3, { position: new Vec3(0, targetY, 0) }, { easing: "bounceOut" })
-                .call(() => {
-                    onFinish();
-                })
-                .start();
+            falls.push(new Promise(resolve => {
+                tween(symbol.ctrl.node)
+                    .to(0.3, { position: new Vec3(0, targetY, 0) }, { easing: "bounceOut" })
+                    .call(() => resolve())
+                    .start();
+            }));
             freeSpot++;
         })
+        return Promise.all(falls);
     }
 }
