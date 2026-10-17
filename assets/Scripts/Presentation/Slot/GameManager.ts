@@ -8,6 +8,7 @@ import {Balance} from "db://assets/Scripts/Domain/Common/Balance";
 import {PrizesController} from "db://assets/Scripts/Presentation/Slot/PrizesController";
 import {SceneName} from "db://assets/Scripts/Domain/Common/SceneDefinition";
 import {SceneController} from "db://assets/Scripts/Presentation/Common/SceneController";
+import {bonusConfig} from "db://assets/Scripts/Domain/Slot/GameConfig";
 
 const { ccclass, property } = _decorator;
  
@@ -94,7 +95,7 @@ export class GameManager extends Component {
         }, 0.4);
     }
     private bonusStartCheck(){
-        if(this.totalWon >= this.bet * 3){
+        if(this.totalWon >= this.betId * bonusConfig.WIN_THRESHOLD){
             this.SceneChanger.startLoadingBonus(SceneName.BONUS_SLOT);
         }
         this.totalWon = 0;
