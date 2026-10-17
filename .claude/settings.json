@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./node_modules/**)",
+      "Read(./library/**)",
+      "Read(./temp/**)",
+      "Read(./local/**)",
+      "Read(./build/**)",
+      "Read(./assets/textures/**)",
+      "Read(./assets/audio/**)",
+      "Read(**/*.meta)",
+      "Read(**/*.png)",
+      "Read(**/*.jpg)"
+    ]
+  }
+}
